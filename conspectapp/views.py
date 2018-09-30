@@ -6,7 +6,7 @@ from commentapp.models import Coment
 from conspectapp.models import Conspect
 from conspectapp.forms import ConspectForm
 from django.contrib.auth.decorators import login_required
-
+import markdown2
 
 
 # Create your views here.
@@ -30,8 +30,10 @@ def conspect_edit(request, conspect_id):
 
 def get_edit_conspect(request):
     new_content = request.GET['content']
+    new_conspect_name = request.GET['conspect_name']
     conspect_id = request.GET['conspect_id']
-    conspect_name = Conspect.objects.filter(id=conspect_id).values('name').update(content=new_content)
+    Conspect.objects.filter(id=conspect_id).values('name').update(content=new_content)
+    Conspect.objects.filter(id=conspect_id).values('name').update(name=new_conspect_name)
     return HttpResponse('Изменения сохранены')
 
 
@@ -41,6 +43,7 @@ def conspect(request,conspect_id):
     conspect_idd = Conspect.objects.filter(id=conspect_id).values('id')
     coment_list = Coment.objects.filter(conspect_id=conspect_id).order_by('-created')
     comment_form = ComentForm(request.POST)
+    conspect_content2 = markdown2.markdown(conspect_content)
     if request.method =='POST':
         if comment_form.is_valid:
             comment_form.save()
@@ -52,5 +55,5 @@ def conspect(request,conspect_id):
         'coment_list' : coment_list,
         'comment_form' : comment_form,
         'conspect_name' : conspect_name,
-        'conspect_content' : conspect_content,
+        'conspect_content' : conspect_content2,
     })

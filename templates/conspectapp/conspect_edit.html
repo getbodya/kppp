@@ -13,8 +13,12 @@
 {%block content%}
     <a href="../">НАЗАД</a>
         <div id="redaktor">
+                <div>
+                <textarea name="" id="conspect_name" cols="30" rows="1">{{conspect_name}}</textarea>
+                </div>
+                <div>
                 <textarea name="{{conspect_id}}" id="conspect" cols="100" rows="10">{{conspect_content}}</textarea>
-           
+                 </div>
         <button onclick="geter()">сохранить изменения</button>
 
         </div>
