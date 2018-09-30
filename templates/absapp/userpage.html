@@ -6,11 +6,31 @@
 {% endblock %}
 
 {% block content%}
-<div id="as">
-        {% for item in user_conspect_list %}
-        <div>    
-        <a href="/conspect/{{item.id}}/">{{item.name}}</a>
-      </div>
-        {% endfor %}
+<div class="col">
+<div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+    <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true"> {{user.username}}</a>
+    <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Список конспектов</a>
+    <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">Messages</a>
+    <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Settings</a>
+  </div>
+  <div class="tab-content" id="v-pills-tabContent">
+    <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+        <a class="list-group-item list-group-item-action list-group-item-secondary" href="{% url 'create_conspect' %}">СОЗДАТЬ КОНСПЕКТ</a>
+    </div>
+    <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+
+        <div class="col">
+            <div class="col-6"><h4>Мои конспекты</h4></div>
+                {% for item in user_conspect_list %}
+                <div class='col-6'>
+                    <a href="/conspect/{{item.id}}/" class="list-group-item list-group-item-action list-group-item-secondary">{{item.name}}</a>    
+              </div>
+                {% endfor %}
+          </div>
+    </div>
+    <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">...</div>
+    <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">...</div>
+  </div>
 </div>
+
 {% endblock %}

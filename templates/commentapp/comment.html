@@ -1,13 +1,11 @@
-
-  <div id="comment_field" name="{{conspect_id}}">
+<div class="conteiner" id="comment_field" name="{{conspect_id}}">
       {% for i in coment_list %}
-      <div class="">
-        <h1>{{i.author}}</h1>
+      <div class="row ">
+          <div class="class">  <h5>{{i.author}}</h5></div>
+          <div class="class">  <h6> {{i.created}}</h6></div>
       </div>
-      <div class="">
-        {{i.content}}
-
+      <div class="row">
+        <h5>{{i.content}}</h5>
       </div>
   {% endfor %}
-  </div>
 </div>

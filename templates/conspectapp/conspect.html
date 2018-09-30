@@ -15,8 +15,7 @@
 <div class="" id="as">
         {% if user.is_authenticated %}
 
-    <a href="{% url 'create_conspect' %}">СОЗДАТЬ КОНСПЕКТ</a>
-
+   
     <a href="edit/">РЕДАКТИРОВАТЬ</a>
         {%endif%}
     <div class="">
@@ -51,19 +50,18 @@
     </form>
 
     КОМЕНТАРИИ
-    {% block coment %}
-
-    <div>
-    <div id="comment_field" name="{{conspect_id}}">
-        {% for i in coment_list %}
-        <div>
-        {{i.author}}
-        {{i.content}}
-        </div>
+    <div class="conteiner" id="comment_field" name="{{conspect_id}}">
+            {% for i in coment_list %}
+            <div class="row ">
+                <div class="class">  <h5>{{i.author}}</h5></div>
+                <div class="class">  <h6> {{i.created}}</h6></div>
+            </div>
+            <div class="row">
+              <h5>{{i.content}}</h5>
+            </div>
         {% endfor %}
-    </div>
-  </div>
-  {% endblock %}
+      </div>
+      
 
   <script> 
   function show(){  

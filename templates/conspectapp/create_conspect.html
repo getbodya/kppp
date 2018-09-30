@@ -2,8 +2,8 @@
 {% block title %}{{ user.username }}{% endblock %}
 {% block content%}
 <div id="as">
-
-  <form action="/" method="POST">
+<a href="{% url 'userpage' user.id %}">sssssss</a>
+  <form action="" method="POST">
         {% csrf_token %}
         {{ form.as_p }}
         <button  class = "pure-button"id = ""type="submit">LOG IN</button>

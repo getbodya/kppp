@@ -7,8 +7,8 @@ from django.contrib.auth import authenticate, login, logout
 
 
 def main(request):
-    toplist = Conspect.objects.order_by('-rating')[0:5]
-    newlist = Conspect.objects.order_by('-created')[0:5]
+    toplist = Conspect.objects.order_by('-rating')[0:10]
+    newlist = Conspect.objects.order_by('-created')[0:10]
     return render(request, 'absapp/main.html',{
         'toplist': toplist,
         'newlist': newlist,
