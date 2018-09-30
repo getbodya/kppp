@@ -1,0 +1,16 @@
+{% extends "absapp/index.html" %}
+{% block title %}{{ user.username }}{% endblock %}
+
+{%block head_link%}
+
+{% endblock %}
+
+{% block content%}
+<div id="as">
+        {% for item in user_conspect_list %}
+        <div>    
+        <a href="/conspect/{{item.id}}/">{{item.name}}</a>
+      </div>
+        {% endfor %}
+</div>
+{% endblock %}

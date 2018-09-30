@@ -1,0 +1,22 @@
+{% extends 'absapp/index.html'%}
+{% load static %}
+
+{% block head_extra %}
+<script src="{% static 'conspectapp/getter.js' %}"></script>
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+
+{% endblock %}
+
+
+{% block title %}КУРСОВОЙ{% endblock %}
+
+{%block content%}
+    <a href="../">НАЗАД</a>
+        <div id="redaktor">
+                <textarea name="{{conspect_id}}" id="conspect" cols="100" rows="10">{{conspect_content}}</textarea>
+           
+        <button onclick="geter()">сохранить изменения</button>
+
+        </div>
+    
+{% endblock %}

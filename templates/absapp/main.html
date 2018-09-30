@@ -1,0 +1,43 @@
+{% extends 'absapp/index.html'%}
+{% block title %}КУРСОВОЙ{% endblock %}
+
+{%block content%}
+<div id="as">
+
+<div class="col-md-4">
+<table class="table">
+  <thead>
+    <tr>
+      <th>ЛУЧШИЕ КОНСПЕКТЫ</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in toplist %}
+    <tr>
+      <td><a href="conspect/{{item.id}}/">{{item.name}}</a></td>
+      <td>{{item.rating}}</td>
+    </tr>
+    {% endfor %}
+
+  </tbody>
+</table>
+</div>
+<div class="col-md-4">
+<table class="table">
+  <thead>
+    <tr>
+      <th>НОВЫЕ КОНСПЕКТЫ</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in newlist %}
+    <tr>
+      <td><a href="conspect/{{ item.id }}/">{{ item.name }}</a></td>
+    </tr>
+    {% endfor %}
+
+  </tbody>
+</table>
+</div>
+</div>
+{% endblock %}

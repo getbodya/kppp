@@ -1,0 +1,86 @@
+{% extends 'absapp/index.html'%}
+{% load static %}
+
+{% block title %}КУРСОВОЙ{% endblock %}
+
+{% block head_extra %}
+<link rel="stylesheet" type="text/css" href="../../static/5star.css">
+<!--<script src="../../static/5star.js"></script>-->
+<script src="{% static 'conspectapp/5star.js' %}"></script>
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+
+{% endblock %}
+{%block content%}
+<div id="as">
+        {% if user.is_authenticated %}
+
+    <a href="{% url 'create_conspect' %}">СОЗДАТЬ КОНСПЕКТ</a>
+
+    <a href="edit/">РЕДАКТИРОВАТЬ</a>
+        {%endif%}
+
+    <div >
+      {{conspect_idd}}
+      {{ conspect_name }}
+    </div>
+    <div id="conspect" name="{{conspect_id}}">
+      {{ conspect_content }}
+    </div>
+    
+<div>
+    <fieldset class="rating" >
+        <legend>Please rate:</legend>
+        <input type="radio" id="star5" name="rating" value="5" /><label  for="star5" title="Rocks!">5 stars</label>
+        <input type="radio" id="star4" name="rating" value="4" /><label  for="star4" title="Pretty good">4 stars</label>
+        <input type="radio" id="star3" name="rating" value="3" /><label  for="star3" title="Meh">3 stars</label>
+        <input type="radio" id="star2" name="rating" value="2" /><label  for="star2" title="Kinda bad">2 stars</label>
+        <input type="radio" id="star1" name="rating" value="1" /><label  for="star1" title="Sucks big time">1 star</label>
+        <button onclick="get_rating()">Оценить</button>
+    </fieldset>
+</div>      
+
+    <div>
+    <form method="POST">
+          {% csrf_token %}
+          {{ comment_form.as_p }}
+          <button  class = "pure-button"id = ""type="submit">Отправить</button>
+    </form>
+
+    КОМЕНТАРИИ
+    {% block coment %}
+
+    <div>
+    <div id="comment_field" name="{{conspect_id}}">
+        {% for i in coment_list %}
+        <div>
+        {{i.author}}
+        {{i.content}}
+        </div>
+        {% endfor %}
+    </div>
+  </div>
+  {% endblock %}
+
+  <script> 
+  function show(){  
+      $.ajax({
+        type: "GET",
+        url:  "{% url 'check_comment' %}",
+        data:{
+          'conspect_id' :{{conspect_id}},
+        },
+        dataType: "text",
+        success: function(html){  
+                      $("#comment_field").html(html);  
+                  }  
+      })
+  }
+  $(document).ready(function(){  
+              show();  
+              setInterval('show()',5000);  
+          }); 
+  </script>
+    </div>
+</div>
+{% endblock %}

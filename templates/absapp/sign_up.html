@@ -1,0 +1,13 @@
+{% extends 'absapp/index.html'%}{% block title %}SIGN UP{% endblock %}
+
+{%block content%}
+<div id="as">
+
+<h2>SIGN UP</h2>
+    <form  method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ user_form.as_p }}
+        <button type="submit">SIGN UP</button>
+    </form>
+    {% endblock %}
+</div>
