@@ -42,9 +42,19 @@ INSTALLED_APPS = [
     'conspectapp',
     'commentapp',
     'ratingapp',
-    
-
+    'social_django',
 ]
+
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.vk.VKOAuth2',          # бекенд авторизации через ВКонтакте
+    'django.contrib.auth.backends.ModelBackend',)
+
+SOCIAL_AUTH_VK_OAUTH2_KEY = '6707933'
+SOCIAL_AUTH_VK_OAUTH2_SECRET = 'JTd30JbbnDMZ2vmjU2OJ'
+SOCIAL_AUTH_VK_OAUTH2_SCOPE = ['email']
+
+
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -69,6 +79,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends',  # Добавил эту строку
 
             ],
         },

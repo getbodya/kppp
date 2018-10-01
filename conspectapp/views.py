@@ -36,7 +36,7 @@ def get_edit_conspect(request):
     Conspect.objects.filter(id=conspect_id).values('name').update(name=new_conspect_name)
     return HttpResponse('Изменения сохранены')
 
-
+#@login_required(login_url = 'conspect_for_anonymous')
 def conspect(request,conspect_id):
     conspect_name = Conspect.objects.filter(id=conspect_id).values('name')[0]['name']
     conspect_content = Conspect.objects.filter(id=conspect_id).values('content')[0]['content']
@@ -56,4 +56,12 @@ def conspect(request,conspect_id):
         'comment_form' : comment_form,
         'conspect_name' : conspect_name,
         'conspect_content' : conspect_content2,
+    })
+
+def conspect_for_anonymous(request,conspect_id):
+    conspect_name = Conspect.objects.filter(id=conspect_id).values('name')[0]['name']
+    conspect_content = Conspect.objects.filter(id=conspect_id).values('content')[0]['content']
+    return render(request, 'conspectapp/conspect_for_anonymous',{
+        'conspect_content' : conspect_content,
+        'conspect_name' : conspect_name,
     })

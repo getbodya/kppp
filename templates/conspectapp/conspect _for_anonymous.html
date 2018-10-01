@@ -30,8 +30,6 @@
                 {{ conspect_content|safe }}
             </div>
          </div>
-            {% if user.is_authenticated %}
-
 <div class="">
     <fieldset class="rating" >
         <legend>Please rate:</legend>
@@ -63,12 +61,7 @@
             </div>
         {% endfor %}
       </div>
-        {% else %}
-
-            Чтобы оставить комментарий или оценить конспект  <a href="{% url 'login' %}">войдите на сайт</a>
-
-        {% endif %}
-
+      
 
   <script> 
   function show(){  

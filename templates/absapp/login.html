@@ -1,18 +1,19 @@
 {% extends 'absapp/index.html'%}
 {% block title %}LOGIN{% endblock %}
-
+{% load static %}
 {%block content%}
-
-
-<div id="as">
-
+            <div class="col-md-3 offset-md-5">
 <div  class="col-md-4">
-  <h2 id = "">LOGIN</h2>
   <form method="POST">
         {% csrf_token %}
         {{ form.as_p }}
-        <button  class = "pure-button"id = ""type="submit">LOG IN</button>
+        <button  class = "pure-button"id = ""type="submit">ВОЙТИ</button>
   </form>
 </div>
+<a href="/login/vk-oauth2">
+    <img src="{%static 'img/vk-social-network-logo (2).png'%}" alt="">
+</a>
     </div>
+    </div>
+
 {% endblock %}

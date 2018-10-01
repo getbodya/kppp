@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from absapp import views
 from conspectapp import views as conspect_views
 from commentapp import views as comment_views
@@ -32,8 +32,10 @@ urlpatterns = [
     path('userpage/create_conspect/', conspect_views.create_conspect,name='create_conspect'),
     path('sign_up/', views.sign_up, name='sign-up'),
     path('conspect/<int:conspect_id>/', conspect_views.conspect, name='conspect'),
+#    path('conspect/<int:conspect_id>/anonymous/',conspect_views.conspect_for_anonymous, name='conspect_for_anonymous'),
     path('conspect/<int:conspect_id>/edit/', conspect_views.conspect_edit, name='conspect_edit'),
     path('check_comment/', comment_views.check_comment, name='check_comment'),
     path('get_rating/', rating_views.get_rating, name='get_rating'),
     path('get_edit_conspect/', conspect_views.get_edit_conspect, name='get_edit_conspect'),
+    path('', include('social_django.urls')),
 ]
