@@ -1,6 +1,4 @@
-from django.shortcuts import render
-from ratingapp.models import RatingModel
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse
 from conspectapp.models import Conspect
 
 

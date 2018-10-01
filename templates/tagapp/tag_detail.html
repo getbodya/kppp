@@ -1,0 +1,26 @@
+{% extends 'absapp/index.html'%}
+{% load static %}
+
+{% block head_extra %}
+{% endblock %}
+
+
+{% block title %}КУРСОВОЙ{% endblock %}
+
+{%block content%}
+<div class="col-md-6 offset-md-3">
+    {% for conspect in tag_detail_list.all %}
+
+    <div class="card text-center mt-3">
+        <div class="card-header">
+            {{conspect.name}}
+        </div>
+        <div class="card-body">
+            <p class="card-text">{{conspect.description}}{{conspect.id}}</p>
+            <a href="{% url 'conspect' conspect.id %}" class="btn btn-secondary">Подробнее</a>
+        </div>
+    </div>
+
+    {% endfor %}
+</div>
+{% endblock %}

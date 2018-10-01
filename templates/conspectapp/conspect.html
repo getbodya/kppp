@@ -4,74 +4,71 @@
 {% block title %}КУРСОВОЙ{% endblock %}
 
 {% block head_extra %}
-<link rel="stylesheet" type="text/css" href="../../static/5star.css">
-<!--<script src="../../static/5star.js"></script>-->
+<link rel="stylesheet" type="text/css" href="{% static '5star.css' %}">
 <script src="{% static 'conspectapp/5star.js' %}"></script>
 <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 {% endblock %}
+
+
 {%block content%}
 <div class="" id="as">
-        {% if user.is_authenticated %}
-
-   
-    <a href="edit/">РЕДАКТИРОВАТЬ</a>
-        {%endif%}
-    <div class="">
-
+    {% if user.is_authenticated %}
+        <a href="edit/">РЕДАКТИРОВАТЬ</a>
+    {%endif%}
+    <div>
+        <div class="col-md-6 offset-md-3">
+            <h1>{{ conspect.name }}</h1>
+        </div>
+        <div class="row col-md-6 offset-md-3">
+            {% for tag in conspect.tags.all %}
+            <div class="mr-1">
+            <a href="{% url 'tag_detail' tag.id %}"><h5><span class="badge badge-dark">{{tag}}</span></h5></a>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="col-md-6 offset-md-3" id="conspect" name="{{conspect_id}}">
+            {{ conspect_content|safe }}
+        </div>
+    </div>
+    {% if user.is_authenticated %}
+        <div class="">
+            <fieldset class="rating" >
+                <input type="radio" id="star5" name="rating" value="5" /><label  for="star5" title="Rocks!">5 stars</label>
+                <input type="radio" id="star4" name="rating" value="4" /><label  for="star4" title="Pretty good">4 stars</label>
+                <input type="radio" id="star3" name="rating" value="3" /><label  for="star3" title="Meh">3 stars</label>
+                <input type="radio" id="star2" name="rating" value="2" /><label  for="star2" title="Kinda bad">2 stars</label>
+                <input type="radio" id="star1" name="rating" value="1" /><label  for="star1" title="Sucks big time">1 star</label>
+                <button onclick="get_rating()">Оценить</button>
+            </fieldset>
+        </div>
+        <div class="col-md-6 offset-md-3">
+            <form method="POST">
+                {% csrf_token %}
+                {{ comment_form.as_p }}
+                <button  class = "pure-button" type="submit">Отправить</button>
+            </form>
+            КОМЕНТАРИИ
+            <div class="conteiner" id="comment_field" name="{{conspect_id}}">
+                {% for i in coment_list %}
+                    <div class="row ">
+                        <h5>{{i.author}}</h5>
+                        <h6> {{i.created}}</h6>
+                    </div>
+                    <div class="row">
+                        <h5>{{i.content}}</h5>
+                    </div>
+                {% endfor %}
+            </div>
+    {% else %}
+        Чтобы оставить комментарий или оценить конспект <a href="{% url 'login' %}">войдите на сайт</a>
+    {% endif %}
 
     </div>
-        <div>
-            <div class="col-md-6 offset-md-3">
-                <h1>{{ conspect_name }}</h1>
-            </div>
-            <div class="col-md-6 offset-md-3" id="conspect" name="{{conspect_id}}">
-                {{ conspect_content|safe }}
-            </div>
-         </div>
-            {% if user.is_authenticated %}
-
-<div class="">
-    <fieldset class="rating" >
-        <legend>Please rate:</legend>
-        <input type="radio" id="star5" name="rating" value="5" /><label  for="star5" title="Rocks!">5 stars</label>
-        <input type="radio" id="star4" name="rating" value="4" /><label  for="star4" title="Pretty good">4 stars</label>
-        <input type="radio" id="star3" name="rating" value="3" /><label  for="star3" title="Meh">3 stars</label>
-        <input type="radio" id="star2" name="rating" value="2" /><label  for="star2" title="Kinda bad">2 stars</label>
-        <input type="radio" id="star1" name="rating" value="1" /><label  for="star1" title="Sucks big time">1 star</label>
-        <button onclick="get_rating()">Оценить</button>
-    </fieldset>
-</div>      
-
-    <div class="col-md-6 offset-md-3">
-    <form method="POST">
-          {% csrf_token %}
-          {{ comment_form.as_p }}
-          <button  class = "pure-button"id = ""type="submit">Отправить</button>
-    </form>
-
-    КОМЕНТАРИИ
-    <div class="conteiner" id="comment_field" name="{{conspect_id}}">
-            {% for i in coment_list %}
-            <div class="row ">
-                <div class="class">  <h5>{{i.author}}</h5></div>
-                <div class="class">  <h6> {{i.created}}</h6></div>
-            </div>
-            <div class="row">
-              <h5>{{i.content}}</h5>
-            </div>
-        {% endfor %}
-      </div>
-        {% else %}
-
-            Чтобы оставить комментарий или оценить конспект  <a href="{% url 'login' %}">войдите на сайт</a>
-
-        {% endif %}
-
-
-  <script> 
-  function show(){  
+</div>
+<script>
+  function checker(){
       $.ajax({
         type: "GET",
         url:  "{% url 'check_comment' %}",
@@ -85,10 +82,8 @@
       })
   }
   $(document).ready(function(){  
-              show();  
-              setInterval('show()',5000);  
+              checker();
+              setInterval('checker()',5000);
           }); 
-  </script>
-    </div>
-</div>
+</script>
 {% endblock %}

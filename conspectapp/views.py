@@ -38,9 +38,8 @@ def get_edit_conspect(request):
 
 #@login_required(login_url = 'conspect_for_anonymous')
 def conspect(request,conspect_id):
-    conspect_name = Conspect.objects.filter(id=conspect_id).values('name')[0]['name']
+    conspect = Conspect.objects.filter(id=conspect_id).get()
     conspect_content = Conspect.objects.filter(id=conspect_id).values('content')[0]['content']
-    conspect_idd = Conspect.objects.filter(id=conspect_id).values('id')
     coment_list = Coment.objects.filter(conspect_id=conspect_id).order_by('-created')
     comment_form = ComentForm(request.POST)
     conspect_content2 = markdown2.markdown(conspect_content)
@@ -48,20 +47,21 @@ def conspect(request,conspect_id):
         if comment_form.is_valid:
             comment_form.save()
             return HttpResponseRedirect(reverse('conspect',kwargs={
-                'conspect_id' : conspect_id
+                'conspect_id' : conspect_id,
+                'conspect': conspect,
             }))
     return render(request, 'conspectapp/conspect.html',{
-        'conspect_id' : conspect_id,
-        'coment_list' : coment_list,
-        'comment_form' : comment_form,
-        'conspect_name' : conspect_name,
-        'conspect_content' : conspect_content2,
+        'conspect_id': conspect_id,
+        'coment_list': coment_list,
+        'comment_form': comment_form,
+        'conspect': conspect,
+        'conspect_content': conspect_content2,
     })
 
 def conspect_for_anonymous(request,conspect_id):
     conspect_name = Conspect.objects.filter(id=conspect_id).values('name')[0]['name']
     conspect_content = Conspect.objects.filter(id=conspect_id).values('content')[0]['content']
-    return render(request, 'conspectapp/conspect_for_anonymous',{
+    return render(request, 'conspectapp/conspect_for_anonymous', {
         'conspect_content' : conspect_content,
         'conspect_name' : conspect_name,
     })

@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'conspectapp',
     'commentapp',
     'ratingapp',
+    'tagapp',
     'social_django',
 ]
 
