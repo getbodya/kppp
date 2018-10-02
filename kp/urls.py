@@ -26,9 +26,9 @@ from django.contrib.auth import views as auth_views
 urlpatterns = [
     path('err/', views.err, name='error'),
     path('admin/', admin.site.urls),
-    path('',views.main, name='mainpage'),
+    path('', views.main, name='mainpage'),
     path('login/', auth_views.LoginView.as_view(template_name='absapp/login.html'), name='login'),
-    path('logout/',views.logout_user, name='logout'),
+    path('logout/', views.logout_user, name='logout'),
     path('userpage/<int:user_id>/', views.user_page, name='userpage'),
     path('userpage/create_conspect/', conspect_views.create_conspect,name='create_conspect'),
     path('sign_up/', views.sign_up, name='sign-up'),

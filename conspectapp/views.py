@@ -36,7 +36,7 @@ def get_edit_conspect(request):
     Conspect.objects.filter(id=conspect_id).values('name').update(name=new_conspect_name)
     return HttpResponse('Изменения сохранены')
 
-#@login_required(login_url = 'conspect_for_anonymous')
+
 def conspect(request,conspect_id):
     conspect = Conspect.objects.filter(id=conspect_id).get()
     conspect_content = Conspect.objects.filter(id=conspect_id).values('content')[0]['content']
@@ -45,11 +45,18 @@ def conspect(request,conspect_id):
     conspect_content2 = markdown2.markdown(conspect_content)
     if request.method =='POST':
         if comment_form.is_valid:
-            comment_form.save()
-            return HttpResponseRedirect(reverse('conspect',kwargs={
-                'conspect_id' : conspect_id,
+            s=comment_form.save(commit=False)
+            s.user = request.user
+            s.conspect = conspect
+            s.save()
+
+            return render(request, 'conspectapp/conspect.html', {
+                'conspect_id': conspect_id,
+                'coment_list': coment_list,
+                'comment_form': comment_form,
                 'conspect': conspect,
-            }))
+                'conspect_content': conspect_content2,
+            })
     return render(request, 'conspectapp/conspect.html',{
         'conspect_id': conspect_id,
         'coment_list': coment_list,

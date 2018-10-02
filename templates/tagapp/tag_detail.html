@@ -8,9 +8,10 @@
 {% block title %}КУРСОВОЙ{% endblock %}
 
 {%block content%}
-<div class="col-md-6 offset-md-3">
-    {% for conspect in tag_detail_list.all %}
 
+<div class="col-md-6 offset-md-3">
+    <h1 class="mt-4">{{tag_name}}</h1>
+    {% for conspect in tag_detail_list.all %}
     <div class="card text-center mt-3">
         <div class="card-header">
             {{conspect.name}}
@@ -20,7 +21,6 @@
             <a href="{% url 'conspect' conspect.id %}" class="btn btn-secondary">Подробнее</a>
         </div>
     </div>
-
     {% endfor %}
 </div>
 {% endblock %}

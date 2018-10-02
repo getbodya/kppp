@@ -14,12 +14,15 @@
 
 {%block content%}
 <div class="" id="as">
-    {% if user.is_authenticated %}
-        <a href="edit/">РЕДАКТИРОВАТЬ</a>
-    {%endif%}
     <div>
-        <div class="col-md-6 offset-md-3">
-            <h1>{{ conspect.name }}</h1>
+
+            <div class="col-md-6 offset-md-3">
+                <h1>{{ conspect.name }}</h1>
+                {% if user.id == conspect.author_id %}
+                    <a class="btn btn-outline-secondary" href="edit/">РЕДАКТИРОВАТЬ</a>
+
+                {% endif %}
+            </div>
         </div>
         <div class="row col-md-6 offset-md-3">
             {% for tag in conspect.tags.all %}
@@ -47,22 +50,21 @@
             <form method="POST">
                 {% csrf_token %}
                 {{ comment_form.as_p }}
-                <button  class = "pure-button" type="submit">Отправить</button>
+                <button  class = "" type="submit">Отправить</button>
             </form>
             КОМЕНТАРИИ
-            <div class="conteiner" id="comment_field" name="{{conspect_id}}">
-                {% for i in coment_list %}
-                    <div class="row ">
-                        <h5>{{i.author}}</h5>
-                        <h6> {{i.created}}</h6>
-                    </div>
-                    <div class="row">
-                        <h5>{{i.content}}</h5>
-                    </div>
-                {% endfor %}
+        </div>
+
+            <div class="col-md-6 offset-md-3" id="comment_field" name="{{conspect_id}}">
+
             </div>
     {% else %}
-        Чтобы оставить комментарий или оценить конспект <a href="{% url 'login' %}">войдите на сайт</a>
+<div  class="p-3 mb-2 bg-dark text-white">
+       <div class="col-md-6 offset-md-3">
+
+       Чтобы оставить комментарий или оценить конспект <a href="{% url 'login' %}">войдите на сайт</a>
+</div>
+</div>
     {% endif %}
 
     </div>

@@ -2,42 +2,67 @@
 {% block title %}КУРСОВОЙ{% endblock %}
 
 {%block content%}
-<div id="as row">
-<div class=" row">
-<div class="col-md-4">
-<table class="table">
-  <thead>
-    <tr>
-      <th>ЛУЧШИЕ КОНСПЕКТЫ</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for item in toplist %}
-    <tr>
-      <td><a href="conspect/{{item.id}}/">{{item.name}}</a></td>
-      <td>{{item.rating}}</td>
-    </tr>
-    {% endfor %}
+<div class="mt-5">
 
-  </tbody>
-</table>
+<ul class="nav nav-tabs col-md-8" id="myTab" role="tablist">
+  <li class="nav-item col-md-4">
+    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Лучшие конспекты</a>
+  </li>
+  <li class="nav-item col-md-4">
+    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Новые конспекты</a>
+  </li>
+
+</ul>
+<div class="tab-content" id="myTabContent">
+  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+
+<div class="col-md-8 ">
+    {% for conspect in toplist %}
+
+    <div class="card text-center mt-3">
+        <div class="card-header">
+            <div class="mr-5">{{conspect.name}}<span class="badge badge-info">{{conspect.rating}}</span></div>
+        </div>
+        <div class="card-body">
+            <p class="card-text">{{conspect.description}}{{conspect.id}}</p>
+            <a href="{% url 'conspect' conspect.id %}" class="btn btn-secondary">Подробнее</a>
+        </div>
+        <div class="card-footer text-muted">
+            {% for tag in conspect.tags.all %}
+            {{tag}}
+            {% endfor %}
+        </div>
+    </div>
+    {% endfor %}
 </div>
-<div class="col-md-4">
-<table class="table">
-  <thead>
-    <tr>
-      <th>НОВЫЕ КОНСПЕКТЫ</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for item in newlist %}
-    <tr>
-      <td><a href="conspect/{{ item.id }}/">{{ item.name }}</a></td>
-    </tr>
-    {% endfor %}
 
-  </tbody>
-</table>
-</div></div>
+  </div>
+  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+
+
+<div class="col-md-8 ">
+    {% for conspect in newlist %}
+
+    <div class="card text-center mt-3">
+        <div class="card-header">
+            <div class="mr-5">{{conspect.name}}</div>
+        </div>
+        <div class="card-body">
+            <p class="card-text">{{conspect.description}}{{conspect.id}}</p>
+            <a href="{% url 'conspect' conspect.id %}" class="btn btn-secondary">Подробнее</a>
+        </div>
+        <div class="card-footer text-muted">
+            {% for tag in conspect.tags.all %}
+            {{tag}}
+            {% endfor %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+  </div>
+
+</div>
+
 </div>
 {% endblock %}
