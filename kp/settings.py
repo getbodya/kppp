@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'commentapp',
     'ratingapp',
     'tagapp',
+    'uiapp',
     'social_django',
 ]
 

@@ -1,4 +1,13 @@
 {% extends 'absapp/index.html'%}
+{% load static %}
+
+{% block head_extra %}
+
+
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+
+    {% endblock %}
+
 {% block title %}КУРСОВОЙ{% endblock %}
 
 {%block content%}
@@ -19,12 +28,12 @@
 <div class="col-md-8 ">
     {% for conspect in toplist %}
 
-    <div class="card text-center mt-3">
-        <div class="card-header">
-            <div class="mr-5">{{conspect.name}}<span class="badge badge-info">{{conspect.rating}}</span></div>
+    <div class="card text-center mt-3 ">
+        <div class="card-header d-flex justify-content-between flex-row">
+            <div class="mr-5">{{conspect.name}}</div><div><span class=" badge badge-info">{{conspect.rating}}</span></div>
         </div>
-        <div class="card-body">
-            <p class="card-text">{{conspect.description}}{{conspect.id}}</p>
+        <div id="math" class="card-body">
+            <p class="card-text">{{conspect.description}}</p>
             <a href="{% url 'conspect' conspect.id %}" class="btn btn-secondary">Подробнее</a>
         </div>
         <div class="card-footer text-muted">
@@ -48,7 +57,7 @@
             <div class="mr-5">{{conspect.name}}</div>
         </div>
         <div class="card-body">
-            <p class="card-text">{{conspect.description}}{{conspect.id}}</p>
+            <p class="card-text">{{conspect.description}}</p>
             <a href="{% url 'conspect' conspect.id %}" class="btn btn-secondary">Подробнее</a>
         </div>
         <div class="card-footer text-muted">

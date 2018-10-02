@@ -21,7 +21,7 @@ from commentapp import views as comment_views
 from ratingapp import views as rating_views
 from tagapp import views as tag_views
 from django.contrib.auth import views as auth_views
-
+from uiapp import views as ui_views
 
 urlpatterns = [
     path('err/', views.err, name='error'),
@@ -38,5 +38,6 @@ urlpatterns = [
     path('get_rating/', rating_views.get_rating, name='get_rating'),
     path('get_edit_conspect/', conspect_views.get_edit_conspect, name='get_edit_conspect'),
     path('tag/<int:tag_id>/', tag_views.tag_detail, name='tag_detail'),
+    path('change_style/', ui_views.change_style, name='change_style'),
     path('', include('social_django.urls')),
 ]
