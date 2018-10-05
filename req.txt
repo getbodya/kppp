@@ -1,4 +1,4 @@
 Django==2.1.1
 markdown2==2.3.6
 social-auth-app-django==2.1.0
-
+cloudinary==1.13.0

@@ -1,0 +1,35 @@
+{% extends 'absapp/index.html'%}
+{% load static %}
+
+{% block title %}КУРСОВОЙ{% endblock %}
+
+{% block head_extra %}
+{% endblock %}
+
+{%block content%}
+
+
+<div class="conteiner">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <h3>Результат поиска :</h3>
+            {% for item in founded %}
+            <div class="alert alert-secondary">
+                <a href="{% url 'conspect' item.id %}"><h3>{{item.name}}</h3></a>
+
+            </div>
+            {% endfor %}
+            {% for item in founded_comment %}
+             <div class="alert alert-secondary">
+                 <a href="{% url 'conspect' item.conspect_id %}">{{item.conspect}}</a>
+            </div>
+            <div>
+            </div>
+
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
