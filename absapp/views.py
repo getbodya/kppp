@@ -50,6 +50,7 @@ def sign_up(request):
         'user_form' : user_form,
     })
 
+
 def logout_user(request):
     logout(request)
     return redirect(main)

@@ -1,14 +1,21 @@
 {% extends "absapp/index.html" %}
 {% block title %}{{ user.username }}{% endblock %}
 {% block content%}
-<div id="as">
-<a href="{% url 'userpage' user.id %}">sssssss</a>
-  <form action="" method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button  class = "pure-button"id = ""type="submit">Сохранить конспект</button>
-  </form>
 
+
+<div id="as">
+	<div class='d-flex flex-column'>
+		
+		<a href="{% url 'userpage' user.id %}">Вернуться назад</a>
+
+		<div class="d-flex justify-content-center mt-4">
+  			<form action="" method="POST">
+        		{% csrf_token %}
+        		{{ form.as_p }}
+        		<button  class = "pure-button"id = ""type="submit">Сохранить конспект</button>
+  			</form>
+  		</div>
+  	</div>
 </div>
 
 {% endblock %}

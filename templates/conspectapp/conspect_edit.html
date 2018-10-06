@@ -11,15 +11,17 @@
 {% block title %}КУРСОВОЙ{% endblock %}
 
 {%block content%}
-    <a href="../">НАЗАД</a>
-        <div id="redaktor col-md-6 offset-md-3">
-                <div>
-                <textarea name="" id="conspect_name" cols="30" rows="1">{{conspect_name}}</textarea>
-                </div>
-                <div>
-                <textarea name="{{conspect_id}}" id="conspect" cols="100" rows="10">{{conspect_content}}</textarea>
-                 </div>
-        <button onclick="geter()">сохранить изменения</button>
+    <a href="../">Вернуться к конспекту</a>
+        <div id="redaktor" class='d-flex flex-column'>
+                    <div class="d-flex justify-content-center mt-4">
+                    <textarea name="" id="conspect_name" cols="80" rows="1">{{conspect_name}}</textarea>
+                    </div>
+                    <div class="d-flex justify-content-center mt-1">
+                    <textarea name="{{conspect_id}}" id="conspect" cols="80" rows="18">{{conspect_content}}</textarea>
+                    </div>
+                    <div class="d-flex justify-content-center mt-1">        
+                    <button type="button"  class="btn btn-secondary btn-lg btn-block" onclick="geter()">Сохранить изменения</button>
+                    </div>
         </div>
     
 {% endblock %}
