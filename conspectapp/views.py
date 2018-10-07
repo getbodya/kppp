@@ -80,11 +80,3 @@ def conspect(request,conspect_id):
         'conspect': conspect,
         'conspect_content': conspect_content2,
     })
-
-def conspect_for_anonymous(request,conspect_id):
-    conspect_name = Conspect.objects.filter(id=conspect_id).values('name')[0]['name']
-    conspect_content = Conspect.objects.filter(id=conspect_id).values('content')[0]['content']
-    return render(request, 'conspectapp/conspect_for_anonymous', {
-        'conspect_content' : conspect_content,
-        'conspect_name' : conspect_name,
-    })

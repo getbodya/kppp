@@ -1,15 +1,20 @@
 from django.shortcuts import render ,redirect
+from django.http import HttpResponseRedirect, HttpResponse
 from .forms import PhotoForm, UploadForm
 import cloudinary
 
-def add_photo(request):
-    #form = PhotoForm(request.POST, request.FILES)
-    #s = cloudinary.CloudinaryImage("1.jpg").image()
-    #image = request.FILES['image']
-    #cloudinary.uploader.upload('./static/img/gum.jpg') загрузка с серва
-    #cloudinary.uploader.upload(image)
+from cloudinary import utils
 
-    return render(request, 'cloudapp/add_photo.html', {
-        #"form": form,
-        #"s":s,
-    })
+def add_photo(request):
+	if request.method == "POST":
+		x = request.POST.get('img')
+		print('===================')
+		print(x)
+		print('===================')
+
+		cloudinary.uploader.upload(x)
+		#cloudinary.uploader.upload("./static/1.jpg")
+		#utils.cloudinary_url(request.POST.get('img'),public_id = '1123')
+		#cloudinary.utils.cloudinary_url(x)
+		return HttpResponse('OK')
+	return HttpResponse('OKhh')

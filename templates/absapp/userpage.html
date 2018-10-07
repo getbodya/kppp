@@ -32,9 +32,15 @@
             <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
 
                 <div class="col">
-                    <div class="col-9"><h4>Мои конспекты</h4></div>
-                        <a class="list-group-item list-group-item-action list-group-item-secondary"
-                   href="{% url 'create_conspect' %}">СОЗДАТЬ КОНСПЕКТ</a>
+                    <div class="col-9 row d-flex justify-content-around">
+                        <div class="mr-5 mb-5">
+                        <h4>Мои конспекты</h4>
+                        </div>
+                        <div>
+                        <a class="btn btn-outline-secondary" href="{% url 'create_conspect' %}">СОЗДАТЬ КОНСПЕКТ</a>
+                        </div>
+                    </div>
+                        
                     
                     {% for item in user_conspect_list %}
                         <div class='col-9'>

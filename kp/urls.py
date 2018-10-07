@@ -46,6 +46,8 @@ urlpatterns = [
     path('tag/<int:tag_id>/', tag_views.tag_detail, name='tag_detail'),
     path('change_style/', ui_views.change_style, name='change_style'),
     path('add_photo/',cloud_views.add_photo, name='add_photo'),
-    path('', include('social_django.urls')),
     path('search/', search_views.search, name='search'),
+
+    path('', include('social_django.urls')),
+
 ]

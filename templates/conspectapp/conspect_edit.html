@@ -3,8 +3,11 @@
 
 {% block head_extra %}
 <script src="{% static 'conspectapp/getter.js' %}"></script>
-<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-
+<!--<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>-->
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
 {% endblock %}
 
 
@@ -17,11 +20,75 @@
                     <textarea name="" id="conspect_name" cols="80" rows="1">{{conspect_name}}</textarea>
                     </div>
                     <div class="d-flex justify-content-center mt-1">
+
+
+
+                    <form id="drop_area" class="area" method="GET" enctype="multipart/form-data">
                     <textarea name="{{conspect_id}}" id="conspect" cols="80" rows="18">{{conspect_content}}</textarea>
+                    </form>
+                    <output id="result" />
+                    
+
+
                     </div>
                     <div class="d-flex justify-content-center mt-1">        
                     <button type="button"  class="btn btn-secondary btn-lg btn-block" onclick="geter()">Сохранить изменения</button>
                     </div>
         </div>
+
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+
+<script>
+var drop_area = document.getElementById("drop_area");
+function dragHandler(event) {
+    event.stopPropagation();
+    event.preventDefault();
+
+    var drop_area = document.getElementById("drop_area");
+    drop_area.className = "area drag";
+}
+
+function filesDroped(event) {
+    event.stopPropagation();
+    event.preventDefault();
+
+    drop_area.className = "area";
+    let url = "{% url 'add_photo' %}"
+    var files = event.dataTransfer.files; //It returns a FileList object
+
+    var img = files[0];
+    console.log(img);
+    var sss = 'sssss';
+    var formData = new FormData();
+    formData.append('files', files);
+    fetch(url, {
+        method: 'POST',
+        body: {
+            'img':img,
+        }
+        })
+  .then(() => { /* Готово. Информируем пользователя */ })
+  .catch(() => { /* Ошибка. Информируем пользователя */ })
+}
+
+        
     
+
+
+window.onload = function() {
+
+    //Check File API support
+    if (window.File && window.FileList) {
+        var drop_area = document.getElementById("drop_area");
+
+        drop_area.addEventListener("dragover", dragHandler);
+        drop_area.addEventListener("drop", filesDroped);
+
+    }
+    else {
+        console.log("Your browser does not support File API");
+    }
+}
+
+</script>
 {% endblock %}
