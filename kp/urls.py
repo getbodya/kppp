@@ -1,18 +1,3 @@
-"""kp URL Configuration
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/2.1/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.contrib import admin
 from django.urls import path, include
 from absapp import views
@@ -24,6 +9,8 @@ from django.contrib.auth import views as auth_views
 from uiapp import views as ui_views
 from cloudapp import  views as cloud_views
 from searchapp import  views as search_views
+from likeapp import views as like_views
+
 
 urlpatterns = [
     path('', views.main, name='mainpage'),
@@ -37,6 +24,7 @@ urlpatterns = [
     path('userpage/edit/', views.user_edit, name='user_edit'),
     path('userpage/save_edit/', views.user_save_change, name='user_save_change'),
     path('userpage/create_conspect/', conspect_views.create_conspect,name='create_conspect'),
+    path('user_reaction/',like_views.user_reaction, name='user_reaction'),
 
     path('conspect/<int:conspect_id>/', conspect_views.conspect, name='conspect'),
     path('conspect/<int:conspect_id>/edit/', conspect_views.conspect_edit, name='conspect_edit'),
@@ -49,7 +37,6 @@ urlpatterns = [
     path('change_style/', ui_views.change_style, name='change_style'),
     path('add_photo/',cloud_views.add_photo, name='add_photo'),
     path('search/', search_views.search, name='search'),
-
     path('', include('social_django.urls')),
 
 ]

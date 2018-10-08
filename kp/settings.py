@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'social_django',
     'cloudinary',
     'searchapp',
+    'likeapp',
 ]
 
 cloudinary.config(

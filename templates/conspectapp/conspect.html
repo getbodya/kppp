@@ -4,8 +4,6 @@
 {% block title %}{{ conspect.name }}{% endblock %}
 
 {% block head_extra %}
-<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
-<link rel="stylesheet" href="fontawesome-stars.css">
 
 
 
@@ -13,6 +11,8 @@
 
 <link rel="stylesheet" type="text/css" href="{% static '5star.css' %}">
 <script src="{% static 'conspectapp/5star.js' %}"></script>
+<script src="{% static 'conspectapp/like.js' %}"></script>
+
 <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
@@ -24,10 +24,25 @@
 
             <div class="col-md-6 offset-md-3">
                 <h1>{{ conspect.name }}</h1>
+
+
                 {% if user.id == conspect.author_id %}
                     <a class="btn btn-outline-secondary" href="edit/">РЕДАКТИРОВАТЬ</a>
                     <a class="btn btn-outline-danger" href="del/">УДАЛИТЬ</a>
+                {% else %}
+                    <div class="col-md-6 offset-md-3">
+                         <fieldset class="rating" >
+                                <input type="radio" id="star5" name="rating" value="5" /><label for="star5" title="Rocks!">5 stars</label>
+                                <input type="radio" id="star4" name="rating" value="4" /><label for="star4" title="Pretty good">4 stars</label>
+                                <input type="radio" id="star3" name="rating" value="3" /><label for="star3" title="Meh">3 stars</label>
+                                <input type="radio" id="star2" name="rating" value="2" /><label for="star2" title="Kinda bad">2 stars</label>
+                                <input type="radio" id="star1" name="rating" value="1" /><label for="star1" title="Sucks big time">1 star</label>
+                                <button onclick="get_rating()">Оценить</button>
+            </fieldset>
+        </div>
                 {% endif %}
+
+
             </div>
         </div>
         <div class="row col-md-6 offset-md-3">
@@ -44,22 +59,18 @@
         </div>
     </div>
     {% if user.is_authenticated %}
-        <div class="">
+       
+  <!--     <div class="col-md-6 offset-md-3">
             <fieldset class="rating" >
-                <input type="radio" id="star5" name="rating" value="5" onclick="get_rating1(1)"/><label  for="star5" title="Rocks!">5 stars</label>
-                <input type="radio" id="star4" name="rating" value="4" onclick="get_rating1(2)"/><label   for="star4" title="Pretty good">4 stars</label>
-                <input type="radio" id="star3" name="rating" value="3" onclick="get_rating1(3)"/><label   for="star3" title="Meh">3 stars</label>
-                <input type="radio" id="star2" name="rating" value="2" onclick="get_rating1(4)"/><label   for="star2" title="Kinda bad">2 stars</label>
-                <input type="radio" id="star1" name="rating" value="1" onclick="get_rating1(5)"/><label   for="star1" title="Sucks big time">1 star</label>
+                <input type="radio" id="star5" name="rating" value="5" /><label  for="star5" title="Rocks!">5 stars</label>
+                <input type="radio" id="star4" name="rating" value="4" /><label   for="star4" title="Pretty good">4 stars</label>
+                <input type="radio" id="star3" name="rating" value="3" /><label   for="star3" title="Meh">3 stars</label>
+                <input type="radio" id="star2" name="rating" value="2" /><label   for="star2" title="Kinda bad">2 stars</label>
+                <input type="radio" id="star1" name="rating" value="1" /><label   for="star1" title="Sucks big time">1 star</label>
                 <button onclick="get_rating()">Оценить</button>
             </fieldset>
         </div>
-        <div></div>
-
-
-
-
-
+-->
         <div class="col-md-6 offset-md-3">
             <form method="POST">
                 {% csrf_token %}

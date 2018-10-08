@@ -5,8 +5,20 @@
         <h6> {{i.created}}</h6>
     </div>
     <div class="p-3 mb-1 bg-light text-dark">
-        <h5>{{i.content}}</h5>
-    </div>
+        <div id="comment" data-id={{i.id}}><h5>{{i.content}}</h5></div>
+            {% if user in i.user_reaction %}
+               
+                <button id="like" onclick="dislike({{i.id}})" class="btn btn-outline-secondary">dislike</button>
+                <span id="disliked" class="mr-5">{{i.dislikes}}</span>
+            {% else %}
 
+                <button id="like" onclick="like({{i.id}})" class="btn btn-outline-secondary">like</button>
+                <span id="liked" class="mr-5">{{i.likes}}</span>
+
+            {% endif %}
+        
+        
+
+    </div>
 </div>
 {% endfor %}
