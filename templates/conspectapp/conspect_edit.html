@@ -54,21 +54,30 @@ function filesDroped(event) {
 
     drop_area.className = "area";
     let url = "{% url 'add_photo' %}"
-    var files = event.dataTransfer.files; //It returns a FileList object
-
+    var files = event.dataTransfer.files; 
     var img = files[0];
     console.log(img);
-    var sss = 'sssss';
-    var formData = new FormData();
-    formData.append('files', files);
-    fetch(url, {
-        method: 'POST',
-        body: {
-            'img':img,
-        }
-        })
-  .then(() => { /* Готово. Информируем пользователя */ })
-  .catch(() => { /* Ошибка. Информируем пользователя */ })
+    //var sss = 'sssss';
+    //var formData = new FormData();
+    //formData.append('files', files);
+
+    var data = new FormData();
+    data.append('img', img);
+        $.ajax({
+        url : url,
+        processData : false,
+        contentType : false,
+        type : 'POST',
+        data : data,
+    }).done(function(data) {
+    // work with data              
+    });
+
+
+    //fetch(url, {
+        //method: 'POST',
+        //body: {'s':sss}
+        //})
 }
 
         
@@ -77,7 +86,6 @@ function filesDroped(event) {
 
 window.onload = function() {
 
-    //Check File API support
     if (window.File && window.FileList) {
         var drop_area = document.getElementById("drop_area");
 

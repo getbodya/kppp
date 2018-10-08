@@ -7,14 +7,14 @@ from cloudinary import utils
 
 def add_photo(request):
 	if request.method == "POST":
-		x = request.POST.get('img')
+		x = request.POST.get('sss')
+		file = request.FILES.get('img')
 		print('===================')
 		print(x)
+		print(file)
 		print('===================')
 
-		cloudinary.uploader.upload(x)
-		#cloudinary.uploader.upload("./static/1.jpg")
-		#utils.cloudinary_url(request.POST.get('img'),public_id = '1123')
-		#cloudinary.utils.cloudinary_url(x)
+		cloudinary.uploader.upload(file)
+		
 		return HttpResponse('OK')
 	return HttpResponse('OKhh')
