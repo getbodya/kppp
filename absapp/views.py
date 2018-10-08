@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from absapp.forms import  UserForm
 from conspectapp.models import Conspect
 from django.contrib.auth import authenticate, login, logout
+from django.http import HttpResponseRedirect, HttpResponse
 
 
 def main(request):
@@ -54,3 +55,22 @@ def sign_up(request):
 def logout_user(request):
     logout(request)
     return redirect(main)
+
+
+def user_edit(request):
+    if request.method == 'GET':
+        field = request.GET['field']
+        print("===================")
+        print(request.user)
+        print(type(field))
+        print("===================")
+        return HttpResponse('<form method="GET"><input type="text" id="edit_'+field+'"><button type="submit" onclick="replace(\''+field+'\')">submit</button></form>')
+
+
+def user_save_change(request):
+    if request.method == 'GET':
+        new_val = request.GET['new_val']
+        field = request.GET['field']
+        print(new_val)
+        User.objects.filter(username=request.user).update(field=new_val)
+        return HttpResponse('ghbyzkasd')

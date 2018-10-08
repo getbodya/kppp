@@ -34,8 +34,10 @@ urlpatterns = [
     path('sign_up/', views.sign_up, name='sign-up'),
 
     path('userpage/<int:user_id>/', views.user_page, name='userpage'),
-
+    path('userpage/edit/', views.user_edit, name='user_edit'),
+    path('userpage/save_edit/', views.user_save_change, name='user_save_change'),
     path('userpage/create_conspect/', conspect_views.create_conspect,name='create_conspect'),
+
     path('conspect/<int:conspect_id>/', conspect_views.conspect, name='conspect'),
     path('conspect/<int:conspect_id>/edit/', conspect_views.conspect_edit, name='conspect_edit'),
     path('conspect/<int:conspect_id>/del/', conspect_views.conspect_del, name='conspect_del'),

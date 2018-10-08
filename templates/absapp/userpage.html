@@ -24,10 +24,14 @@
         <div class="tab-content col-md-9" id="v-pills-tabContent">
             <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
                 <div>ИНФОРМАЦИЯ О ПОЛЬЗОВАТЕЛЕ</div>
-                    <div>Логин:  {{user.username}}</div>
-                    <div>Имя:    {{user.first_name}}</div>
-                    <div>Фамилия:{{user.last_name}}</div>
-                    <div>Email:  {{user.email}}</div>
+                    <div id="edit_username"></div>
+                    <div onclick="edit('username')">Логин:  {{user.username}}</div>
+                    <div id="edit_first_name"></div>
+                    <div id="first_name" class="editField"  onclick="edit('first_name')">Имя:    {{user.first_name}}</div>
+                    <div id="edit_last_name"></div>
+                    <div id="last_name" class="editField"  onclick="edit('last_name')">Фамилия:{{user.last_name}}</div>
+                    <div id="edit_email"></div>
+                    <div id="email"     class="editField"  onclick="edit('email')">Email:  {{user.email}}</div>
             </div>
             <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
 
@@ -64,8 +68,49 @@
         </div>
     </div>
 
+<textarea name="" id="" cols="50" rows="1"></textarea>
+
 
     <script>
+        function replace(varib) {
+
+            var new_val= $('input#edit_'+varib).val();
+            console.log(new_val);
+            console.log(varib)
+
+            $.ajax({
+                type:"GET",
+                url: "{% url 'user_save_change' %}",
+                data:{
+                    'new_val': new_val,
+                    'field': varib,
+
+                },
+                dataType: "text",
+                success: function (html) {
+                    $("#edit_"+varib).html(html);
+                }
+
+            })
+
+        }
+
+
+        function edit(varib) {
+
+            $.ajax({
+                type: "GET",
+                url:"{% url 'user_edit' %}" ,
+                data: {
+                    'field': varib,
+                },
+                dataType: "text",
+                success: function (html) {
+                   $("#edit_"+varib).html(html);
+                }
+
+                })
+        }
         function change_style(){
             var ui_style = $('#change_style').attr('name')
 

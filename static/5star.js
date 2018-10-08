@@ -1,4 +1,4 @@
-function get_rating(){
+function get_rating( ){
   var value =  $("input[type=radio]:checked").attr("value")
   var conspect_id = $('#conspect').attr('name')
   console.log(value)  
