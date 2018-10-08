@@ -7,7 +7,6 @@ from conspectapp.models import Conspect
 from conspectapp.forms import ConspectForm
 from django.contrib.auth.decorators import login_required
 import markdown2
-from absapp.views import main
 
 
 # Create your views here.
@@ -16,9 +15,10 @@ def create_conspect(request):
     conspect_form = ConspectForm(request.POST)
     if request.method =='POST':
         if conspect_form.is_valid:
-            s = conspect_form.save(commit=False)
-            s.author = request.user
-            s.save()
+            conspect_form.save()
+            #s = conspect_form.save(commit=False)
+            #s.author = request.user
+            #s.save()
     return render(request, 'conspectapp/create_conspect.html',{
         'form':conspect_form,
     } )
@@ -26,7 +26,6 @@ def create_conspect(request):
 
 def conspect_del(request,conspect_id):
     conspect = Conspect.objects.get(id=conspect_id)
-    redirect_url = main
     if request.user.id == conspect.author_id:
         conspect.delete()
         return redirect('../../../')

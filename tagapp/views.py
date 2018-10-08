@@ -10,3 +10,4 @@ def tag_detail(request, tag_id):
         'tag_detail_list': tag_detail_list,
         'tag_name': tag_name,
     })
+
