@@ -30,8 +30,10 @@
             </div>
             {% endfor %}
         </div>
-        <div class="col-md-6 offset-md-3" id="conspect" name="{{conspect_id}}">
+        <div class="col-md-6 offset-md-3" style="width: 800px" id="conspect" name="{{conspect_id}}">
+            <div>
             {{ conspect_content|safe }}
+            </div>
         </div>
     </div>
     {% if user.is_authenticated %}

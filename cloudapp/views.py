@@ -1,20 +1,18 @@
-from django.shortcuts import render ,redirect
 from django.http import HttpResponseRedirect, HttpResponse
-from .forms import PhotoForm, UploadForm
 import cloudinary
 
-from cloudinary import utils
 
 def add_photo(request):
 	if request.method == "POST":
-		x = request.POST.get('sss')
+		name = request.POST.get('name')
 		file = request.FILES.get('img')
 		print('===================')
-		print(x)
 		print(file)
+		print(name)
 		print('===================')
-
-		cloudinary.uploader.upload(file)
-		
-		return HttpResponse('OK')
+		s = cloudinary.uploader.upload(file, public_id=name, width=800, )
+		print(s['url'])
+		link = "![]({})".format(s['url'])
+		print(link)
+		return HttpResponse(link)
 	return HttpResponse('OKhh')

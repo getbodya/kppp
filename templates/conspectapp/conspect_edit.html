@@ -34,6 +34,7 @@
                     <div class="d-flex justify-content-center mt-1">        
                     <button type="button"  class="btn btn-secondary btn-lg btn-block" onclick="geter()">Сохранить изменения</button>
                     </div>
+                    <div id="idd"></div>
         </div>
 
 <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
@@ -48,36 +49,47 @@ function dragHandler(event) {
     drop_area.className = "area drag";
 }
 
+function insertTextAtCursor(el, text, offset) {
+    var val = el.value, endIndex, range, doc = el.ownerDocument;
+    if (typeof el.selectionStart == "number"
+            && typeof el.selectionEnd == "number") {
+        endIndex = el.selectionEnd;
+        el.value = val.slice(0, endIndex) + text + val.slice(endIndex);
+        el.selectionStart = el.selectionEnd = endIndex + text.length+(offset?offset:0);
+    } else if (doc.selection != "undefined" && doc.selection.createRange) {
+        el.focus();
+        range = doc.selection.createRange();
+        range.collapse(false);
+        range.text = text;
+        range.select();
+    }
+}
+
 function filesDroped(event) {
     event.stopPropagation();
     event.preventDefault();
-
     drop_area.className = "area";
     let url = "{% url 'add_photo' %}"
     var files = event.dataTransfer.files; 
     var img = files[0];
     console.log(img);
-    //var sss = 'sssss';
-    //var formData = new FormData();
-    //formData.append('files', files);
-
     var data = new FormData();
+    var name  = Date.now();
     data.append('img', img);
+    data.append('name', name);
+
         $.ajax({
-        url : url,
-        processData : false,
-        contentType : false,
-        type : 'POST',
-        data : data,
+            url : url,
+            processData : false,
+            contentType : false,
+            type : 'POST',
+            data : data,
+            success: function(link){
+                insertTextAtCursor(document.getElementById('conspect'),link);
+            }
     }).done(function(data) {
-    // work with data              
     });
 
-
-    //fetch(url, {
-        //method: 'POST',
-        //body: {'s':sss}
-        //})
 }
 
         
