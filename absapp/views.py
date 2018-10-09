@@ -5,12 +5,14 @@ from absapp.forms import  UserForm
 from conspectapp.models import Conspect
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
-
+from tagapp.views import str_all_tag
 
 def main(request):
+    tag_string = str_all_tag()
     toplist = Conspect.objects.order_by('-rating')[0:10]
     newlist = Conspect.objects.order_by('-created')[0:10]
     return render(request, 'absapp/main.html',{
+        'tag_string':tag_string,
         'toplist': toplist,
         'newlist': newlist,
     })

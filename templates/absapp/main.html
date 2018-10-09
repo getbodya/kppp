@@ -3,6 +3,12 @@
 
 {% block head_extra %}
 
+  <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
+  <script>
+    zingchart.MODULESDIR = "https://cdn.zingchart.com/modules/";
+    ZC.LICENSE = ["569d52cefae586f634c54f86dc99e6a9", "ee6b7db5b51705a13dc2339db3edaf6d"];
+  </script>
+  <link href="https://fonts.googleapis.com/css?family=Crete+Round" rel="stylesheet">
 
     <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
 
@@ -11,26 +17,39 @@
 {% block title %}КУРСОВОЙ{% endblock %}
 
 {%block content%}
-<div class="mt-5">
+<div class="mt-5 ">
+    
 
-<ul class="nav nav-tabs col-md-8" id="myTab" role="tablist">
-  <li class="nav-item col-md-4">
+
+    <div class='d-flex'>
+
+<div class="p-2 mr-2" style="width:25%;" id="myChart">
+</div>
+
+
+
+<div style="width:65%">
+
+
+
+
+    <ul class="nav nav-tabs " id="myTab" role="tablist">
+  <li class="nav-item ">
     <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Лучшие конспекты</a>
   </li>
-  <li class="nav-item col-md-4">
+  <li class="nav-item ">
     <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Новые конспекты</a>
   </li>
-
 </ul>
 <div class="tab-content" id="myTabContent">
   <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
 
-<div class="col-md-8 ">
+<div class=" ">
     {% for conspect in toplist %}
 
-    <div class="card text-center mt-3 ">
+    <div class="card text-center ">
         <div class="card-header d-flex justify-content-between flex-row">
-            <div class="mr-5">{{conspect.name}}</div><div><span class=" badge badge-info">{{conspect.rating}}</span></div>
+            <div class="5">{{conspect.name}}</div><div><span class=" badge badge-info">{{conspect.rating}}</span></div>
         </div>
         <div id="" class="card-body">
             <p class="card-text">{{conspect.description}}</p>
@@ -49,12 +68,12 @@
   <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
 
 
-<div class="col-md-8 ">
+<div class=" ">
     {% for conspect in newlist %}
 
-    <div class="card text-center mt-3">
+    <div class="card text-center ">
         <div class="card-header">
-            <div class="mr-5">{{conspect.name}}</div>
+            <div class="">{{conspect.name}}</div>
         </div>
         <div class="card-body">
             <p class="card-text">{{conspect.description}}</p>
@@ -71,7 +90,66 @@
 
   </div>
 
+</div></div>
+</div>
 </div>
 
-</div>
+<script>
+    
+    var myConfig = {
+      type: 'wordcloud',
+      options: {
+        text: '{{tag_string}}',
+        minLength: 5,
+        ignore: [],
+        maxItems: 40,
+        aspect: 'flow-center',
+        rotate: true,
+        colorType: 'palette',
+        palette: ['#D32F2F', '#5D4037', '#1976D2', '#E53935', '#6D4C41', '#1E88E5', '#F44336', '#795548', '#2196F3', '#EF5350', '#8D6E63', '#42A5F5'],
+
+        style: {
+          fontFamily: 'Crete Round',
+
+          hoverState: {
+            backgroundColor: '#D32F2F',
+            borderRadius: 2,
+            fontColor: 'white'
+          },
+          tooltip: {
+            text: '%text: %hits',
+            visible: true,
+
+            alpha: 0.9,
+            backgroundColor: '#1976D2',
+            borderRadius: 2,
+            borderColor: 'none',
+            fontColor: 'white',
+            fontFamily: 'Georgia',
+            textAlpha: 1
+          }
+        }
+      },
+
+      source: {
+        text: '',
+        //Source: https://obamawhitehouse.archives.gov/the-press-office/2015/03/07/remarks-president-50th-anniversary-selma-montgomery-marches
+        fontColor: '#64B5F6',
+        fontSize: 14,
+        fontFamily: 'Georgia',
+        fontWeight: 'normal',
+        marginBottom: '10%'
+      }
+    };
+
+    zingchart.render({
+      id: 'myChart',
+      data: myConfig,
+      height: 300,
+      width: '100%'
+    });
+
+
+
+</script>
 {% endblock %}
