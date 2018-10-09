@@ -1,13 +1,17 @@
-{% extends 'absapp/index.html'%}{% block title %}SIGN UP{% endblock %}
+{% extends 'absapp/index.html'%}
+{% load i18n %}
+
+
+{% block title %}{% trans "Регистрация" %}{% endblock %}
 
 {%block content%}
 <div id="as">
 
-<h2>SIGN UP</h2>
+<h2>{% trans "Регистрация" %}</h2>
     <form  method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {{ user_form.as_p }}
-        <button type="submit">SIGN UP</button>
+        <button type="submit">{% trans "Регистрация" %}</button>
     </form>
     {% endblock %}
 </div>

@@ -1,5 +1,9 @@
 {% extends 'absapp/index.html'%}
-{% block title %}LOGIN{% endblock %}
+{% load i18n %}
+
+
+
+{% block title %}{% trans "Логин" %}{% endblock %}
 {% load static %}
 {%block content%}
             <div class="col-md-3 offset-md-5">
@@ -7,7 +11,7 @@
   <form method="POST">
         {% csrf_token %}
         {{ form.as_p }}
-        <button  class = "pure-button"id = ""type="submit">ВОЙТИ</button>
+        <button  class = "pure-button"id = ""type="submit">{% trans "Войти" %}</button>
   </form>
 </div>
 <a href="/login/vk-oauth2">

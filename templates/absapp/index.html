@@ -1,5 +1,5 @@
 {% load static %}
-
+{% load i18n %}
 
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -19,12 +19,12 @@
     {% block head_extra %}
 
     {% endblock %}
-    <title>{% block title %}MAINPAGE{% endblock %}</title>
+    <title>{% block title %}{% trans "Главная" %}{% endblock %}</title>
 </head>
 <body>
 <header>
     <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-        <a class="navbar-brand" href="/">ГЛАВНАЯ</a>
+        <a class="navbar-brand" href="/">{% trans "Главная" %}</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
                 aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -36,27 +36,27 @@
                     {% if user.is_authenticated %}
                     <a class="nav-link" href="{% url 'userpage' user.id %}">{{ user.username }}</a>
                     {% else %}
-                    <a class="nav-link" href="{% url 'login' %}">Войти</a>
+                    <a class="nav-link" href="{% url 'login' %}">{% trans "Войти" %}</a>
                     {% endif %}
                     {% endblock %}
                 </li>
                 <li class="nav-item">
                     {% if user.is_authenticated %}
-                    <a class="nav-link" href="{% url 'logout'%}">Выйти</a>
+                    <a class="nav-link" href="{% url 'logout'%}">{% trans "Выйти" %}</a>
                     {% else %}
-                    <a class="nav-link" href="{% url 'sign-up'%}">Зарегистрироваться </a>
+                    <a class="nav-link" href="{% url 'sign-up'%}">{% trans "Зарегистрироваться" %} </a>
                     {%endif%}
                 </li>
                 {% if user.is_authenticated %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'create_conspect'%}">Создать конспект</a>
+                        <a class="nav-link" href="{% url 'create_conspect'%}">{% trans "Создать конспект" %}</a>
                     </li>
                 {% endif %}
             </ul>
 
             <form class="form-inline mt-2 mt-md-0" action="{% url 'search' %}" method="GET">
                 <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" name="q">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Поиск</button>
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">{% trans "Поиск" %}</button>
             </form>
 
 
