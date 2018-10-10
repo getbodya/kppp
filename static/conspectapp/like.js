@@ -1,8 +1,6 @@
 function like(cid){
 	var like = 'like';
 	var comment_id = cid;
-	console.log(like);
-	console.log(comment_id);
 	data = {
 		comment_id: comment_id,
 		like: like

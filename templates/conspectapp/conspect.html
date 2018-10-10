@@ -5,6 +5,8 @@
 {% block head_extra %}
 <link rel="stylesheet" type="text/css" href="{% static '5star.css' %}">
 <script src="{% static 'conspectapp/5star.js' %}"></script>
+<script src="{% static 'conspectapp/save2doc.js' %}"></script>
+
 <script src="{% static 'conspectapp/like.js' %}"></script>
 
 <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
@@ -17,7 +19,9 @@
     <div>
 
             <div class="col-md-6 offset-md-3"  style="background-color: rgb(255, 255, 255);">
-                <h1>{{ conspect.name }}</h1>
+                {% if user.is_authenticated %}
+                    <button class="btn btn-outline-secondary" onclick="Export2Doc('cons','{{ conspect.name }}')">{% trans "Скачать" %}</button>
+                {% endif %}
 
                 {% if user.id == conspect.author_id %}
                     <a class="btn btn-outline-secondary" href="edit/">{% trans "Редактировать" %}</a>
@@ -39,18 +43,19 @@
             {% endfor %}
         </div>
         <div class="col-md-6 offset-md-3" style="width: 800px; background-color: rgb(255, 255, 255);" id="conspect" name="{{conspect_id}}">
-            <div>
+            <div id="cons">
+            <h2>{{ conspect.name }}</h2>
+            <hr>        
             {{ conspect_content|safe }}
             </div>
         </div>
     </div>
     {% if user.is_authenticated %}
-       
         <div class="col-md-6 offset-md-3" style="background-color: rgb(255, 255, 255);">
             <form method="POST">
                 {% csrf_token %}
                 {{ comment_form.as_p }}
-                <button  class = "" type="submit">{% trans "Отправить" %}</button>
+                <button type="submit">{% trans "Отправить" %}</button>
             </form>
             {% trans "Комментарии" %}
         </div>

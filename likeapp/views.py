@@ -13,6 +13,12 @@ def user_reaction(request):
 		comment.likes += 1
 		comment.user_reaction.add(request.user)
 		comment.save()
+
+	elif like and (request.user in comment.user_reaction.all()):
+		comment.likes -= 1
+		comment.user_reaction.remove(request.user)
+		comment.save()
+	
 	"""
 	if dislike and (request.user not in comment.user_reaction.all()):
 		comment.dislikes += 1

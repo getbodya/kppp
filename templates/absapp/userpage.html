@@ -17,22 +17,29 @@
             <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab"
                aria-controls="v-pills-profile" aria-selected="false">{% trans "Список конспектов" %}</a>
             <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab"
-               aria-controls="v-pills-messages" aria-selected="false">{% trans "Сообщения" %}</a>
+               aria-controls="v-pills-messages" aria-selected="false">{% trans "вопросы" %}</a>
             <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab"
                aria-controls="v-pills-settings" aria-selected="false">{% trans "Настройки" %}</a>
         </div>
         <div class="tab-content col-md-9" id="v-pills-tabContent">
             <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
-                <div>{% trans "Информация о пользователе" %}</div>
-                    <div id="edit_username"></div>
-                    <div onclick="edit('username')">{% trans "Логин" %}:  {{user.username}}</div>
-                    <div id="edit_first_name"></div>
-                    <div id="first_name" class="editField"  onclick="edit('first_name')">{% trans "Имя" %}:    {{user.first_name}}</div>
-                    <div id="edit_last_name"></div>
-                    <div id="last_name" class="editField"  onclick="edit('last_name')">{% trans "Фамилия" %}:{{user.last_name}}</div>
-                    <div id="edit_email"></div>
-                    <div id="email"     class="editField"  onclick="edit('email')">Email:  {{user.email}}</div>
-            </div>
+                <div id="editf">
+              
+                <!--<form action="GET">-->
+
+                    <div>{% trans "Информация о пользователе" %}</div>
+                    <div>{% trans "Логин" %}:&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <input type="text"  id="username" value="{{user.username}}"> </div>
+                    <div>{% trans "Имя" %}:&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <input type="text"  id="first_name" value=" {{user.first_name}}"> </div>
+                    <div>{% trans "Фамилия" %}:&#160;&#160; <input type="text"  id="last_name" value="{{user.last_name}}"></div>
+                    <div>Email: &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <input type="text" " id="email" value="{{user.email}}"></div>
+                    <input type="submit" value="Изменить" onclick="save_change()" ><div id="save_change_response"></div>
+ <!--
+                </form>
+-->
+
+                </div>
+               
+                </div>
             <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
 
                 <div class="col">
@@ -61,8 +68,7 @@
             </div>
             <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
 
-                <a href="#" name='math' id="change_style" class="btn btn-secondary btn-lg btn-block" onclick="change_style()">{% trans "Поменять стиль" %}</a>
-                <div id="resp"></div>
+                <a href="#" name='{{user.ui.ui_title}}' id="change_style" class="btn btn-secondary btn-lg btn-block" onclick="change_style()">{% trans "Поменять стиль" %}</a>
                 
                 <form action="{% url 'set_language' %}" method="post">
                     {% csrf_token %}
@@ -86,45 +92,30 @@
     </div>
 
     <script>
-        function replace(varib) {
-
-            var new_val= $('input#edit_'+varib).val();
-            console.log(new_val);
-            console.log(varib)
-
+        function save_change(){
+            var new_login = $('#username').val();
+            var new_first_name = $('#first_name').val();
+            var new_last_name = $('#last_name').val();
+            var new_email = $('#email').val();
             $.ajax({
-                type:"GET",
-                url: "{% url 'user_save_change' %}",
+                type:'GET',
+                url:"{% url 'user_save_change' %}",
                 data:{
-                    'new_val': new_val,
-                    'field': varib,
-
+                'new_login': new_login,
+                'new_first_name': new_first_name,
+                'new_last_name': new_last_name,
+                'new_email': new_email,
                 },
                 dataType: "text",
-                success: function (html) {
-                    $("#edit_"+varib).html(html);
-                }
+                success: function(data){
+                    $("#save_change_response").html(data);
+                    location.reload();
 
+                }
             })
-
         }
 
 
-        function edit(varib) {
-
-            $.ajax({
-                type: "GET",
-                url:"{% url 'user_edit' %}" ,
-                data: {
-                    'field': varib,
-                },
-                dataType: "text",
-                success: function (html) {
-                   $("#edit_"+varib).html(html);
-                }
-
-                })
-        }
         function change_style(){
             var ui_style = $('#change_style').attr('name')
             console.log(ui_style)
@@ -136,9 +127,8 @@
                 },
                 dataType: "text",
                 success: function(data){
-                    $("#resp").html(data);
-
                     $("#change_style").attr('name',data);
+                    location.reload();
                 }
   })
 }

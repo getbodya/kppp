@@ -9,7 +9,6 @@ from tagapp.views import str_all_tag
 from uiapp.models import Ui
 
 def main(request):
-    ui = Ui.objects.get(user_id=request.user.id).ui_title
     tag_string = str_all_tag()
     toplist = Conspect.objects.order_by('-rating')[0:10]
     newlist = Conspect.objects.order_by('-created')[0:10]
@@ -17,7 +16,6 @@ def main(request):
         'tag_string':tag_string,
         'toplist': toplist,
         'newlist': newlist,
-        'ui': ui,
     })
 
 
@@ -26,10 +24,7 @@ def err(request):
 
 
 def index(request):
-    ui = Ui.objects.get(user_id=request.user.id).ui_title
-    return render(request, 'absapp/index.html',{
-        'ui': ui,
-        })
+    return render(request, 'absapp/index.html',{})
 
 
 @login_required(login_url = 'login')
@@ -67,14 +62,24 @@ def logout_user(request):
 
 def user_edit(request):
     if request.method == 'GET':
-        field = request.GET['field']
         return HttpResponse('<form method="GET"><input type="text" id="edit_'+field+'"><button type="submit" onclick="replace(\''+field+'\')">submit</button></form>')
 
 
 def user_save_change(request):
     if request.method == 'GET':
-        new_val = request.GET['new_val']
-        field = request.GET['field']
-        print(new_val)
-        User.objects.filter(username=request.user).update(field=new_val)
-        return HttpResponse('ghbyzkasd')
+        new_login = request.GET['new_login'],
+        new_first_name = request.GET['new_first_name'],
+        new_last_name = request.GET['new_last_name'],
+        new_email = request.GET['new_email'],
+        print(new_login[0])
+        print(new_first_name[0])
+        print(new_last_name[0])
+        print(new_email[0])
+        #User.objects.filter(username=request.user).values('sum_all_vote').update(sum_all_vote=sum_all_vote)
+        Uzer = User.objects.get(username=request.user)
+        Uzer.username = new_login[0]
+        Uzer.first_name = new_first_name[0]
+        Uzer.last_name = new_last_name[0]
+        Uzer.email=new_email[0]
+        Uzer.save()
+        return HttpResponse('Изменено')
