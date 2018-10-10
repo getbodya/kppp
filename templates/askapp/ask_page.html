@@ -1,0 +1,41 @@
+{% extends 'absapp/index.html'%}
+{% load i18n %}
+
+
+{% block title %}{% trans "Регистрация" %}{% endblock %}
+
+{%block content%}
+
+    <div class="col">
+        <div >
+                <textarea id="text-input" style="width:50%" resp="{{conspect_id}}" id="" cols="75" rows="4"></textarea>
+                <button style="width:50%" onclick="sends()">Отправить</button>
+        </div>
+        <div style="width:50%; background-color:white" id="chat-field">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Assumenda magnam dolores recusandae quos animi mollitia 
+                repellendus maxime vel ipsum itaque, aliquam sit deserunt.
+                 Assumenda odio, fuga quae molestias iure esse?
+        </div>
+    </div>
+
+    <script>
+
+        function sends(){
+            var messanges = $('#text-input').val();
+            $.ajax({
+                type: "GET",
+                url: "{% url 'q_and_a' %}",
+                data:{
+                'messanges': messanges,
+                },
+                dataType: "text",
+                success: function(data){
+                    $("#chat-field").html(data);
+                    location.reload();
+                }
+  })
+}
+    </script>
+
+{% endblock %}

@@ -18,6 +18,8 @@ def main(request):
         'newlist': newlist,
     })
 
+def public_user(request):
+    pass
 
 def err(request):
     return render(request, 'absapp/err.html',{})

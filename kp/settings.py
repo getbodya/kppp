@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'cloudinary',
     'searchapp',
     'likeapp',
+    'askapp',
 ]
 
 cloudinary.config(
