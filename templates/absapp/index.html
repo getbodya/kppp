@@ -21,7 +21,8 @@
     {% endblock %}
     <title>{% block title %}{% trans "Главная" %}{% endblock %}</title>
 </head>
-<body>
+<body >
+  
 <header>
     <nav class="navbar navbar-expand-md navbar-dark bg-dark">
         <a class="navbar-brand" href="/">{% trans "Главная" %}</a>
@@ -63,10 +64,13 @@
         </div>
     </nav>
 </header>
-<main role="main">
+<div style="height:80px" >
+</div>
+<div style="background-image: url(../../static/img/{{ui}}.jpg);">
     {% block content%}
 
     {% endblock %}
-</main>
+
+</div>
 </body>
 </html>

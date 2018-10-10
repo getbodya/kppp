@@ -1,7 +1,8 @@
 {% extends 'absapp/index.html'%}
 {% load static %}
-
-{% block title %}КУРСОВОЙ{% endblock %}
+{% load i18n %}
+{% trans "" %}
+{% block title %}{% trans "Курсовой" %}{% endblock %}
 
 {% block head_extra %}
 <link rel="stylesheet" type="text/css" href="../../static/5star.css">
@@ -16,7 +17,7 @@
         {% if user.is_authenticated %}
 
    
-    <a href="edit/">РЕДАКТИРОВАТЬ</a>
+    <a href="edit/">{% trans "" %}{% trans "Редактировать" %}</a>
         {%endif%}
     <div class="">
 
@@ -38,7 +39,7 @@
         <input type="radio" id="star3" name="rating" value="3" /><label  for="star3" title="Meh">3 stars</label>
         <input type="radio" id="star2" name="rating" value="2" /><label  for="star2" title="Kinda bad">2 stars</label>
         <input type="radio" id="star1" name="rating" value="1" /><label  for="star1" title="Sucks big time">1 star</label>
-        <button onclick="get_rating()">Оценить</button>
+        <button onclick="get_rating()">{% trans "Оценить" %}</button>
     </fieldset>
 </div>      
 
@@ -46,10 +47,10 @@
     <form method="POST">
           {% csrf_token %}
           {{ comment_form.as_p }}
-          <button  class = "pure-button"id = ""type="submit">Отправить</button>
+          <button  class = "pure-button"id = ""type="submit">{% trans "Отправить" %}</button>
     </form>
 
-    КОМЕНТАРИИ
+    {% trans "Комментарии" %}
     <div class="conteiner" id="comment_field" name="{{conspect_id}}">
             {% for i in coment_list %}
             <div class="row ">

@@ -1,14 +1,8 @@
 {% extends 'absapp/index.html'%}
 {% load static %}
-
+{% load i18n %}
 {% block title %}{{ conspect.name }}{% endblock %}
-
 {% block head_extra %}
-
-
-
-
-
 <link rel="stylesheet" type="text/css" href="{% static '5star.css' %}">
 <script src="{% static 'conspectapp/5star.js' %}"></script>
 <script src="{% static 'conspectapp/like.js' %}"></script>
@@ -19,40 +13,32 @@
 {% endblock %}
 
 {%block content%}
-<div class="" id="as">
+<div class="" id="as" >
     <div>
 
-            <div class="col-md-6 offset-md-3">
+            <div class="col-md-6 offset-md-3"  style="background-color: rgb(255, 255, 255);">
                 <h1>{{ conspect.name }}</h1>
 
-
                 {% if user.id == conspect.author_id %}
-                    <a class="btn btn-outline-secondary" href="edit/">РЕДАКТИРОВАТЬ</a>
-                    <a class="btn btn-outline-danger" href="del/">УДАЛИТЬ</a>
+                    <a class="btn btn-outline-secondary" href="edit/">{% trans "Редактировать" %}</a>
+                    <a class="btn btn-outline-danger" href="del/">{% trans "Удалить" %}</a>
                 {% else %}
-                    <div class="col-md-6 offset-md-3">
-                         <fieldset class="rating" >
-                                <input type="radio" id="star5" name="rating" value="5" /><label for="star5" title="Rocks!">5 stars</label>
-                                <input type="radio" id="star4" name="rating" value="4" /><label for="star4" title="Pretty good">4 stars</label>
-                                <input type="radio" id="star3" name="rating" value="3" /><label for="star3" title="Meh">3 stars</label>
-                                <input type="radio" id="star2" name="rating" value="2" /><label for="star2" title="Kinda bad">2 stars</label>
-                                <input type="radio" id="star1" name="rating" value="1" /><label for="star1" title="Sucks big time">1 star</label>
-                                <button onclick="get_rating()">Оценить</button>
-            </fieldset>
+                    <div class="col-md-6 offset-md-3" style="background-color: rgb(255, 255, 255);">
+                         
         </div>
                 {% endif %}
 
 
             </div>
         </div>
-        <div class="row col-md-6 offset-md-3">
+        <div class="row col-md-6 offset-md-3"style="background-color: rgb(255, 255, 255);">
             {% for tag in conspect.tags.all %}
             <div class="mr-1">
             <a href="{% url 'tag_detail' tag.id %}"><h5><span class="badge badge-dark">{{tag}}</span></h5></a>
             </div>
             {% endfor %}
         </div>
-        <div class="col-md-6 offset-md-3" style="width: 800px" id="conspect" name="{{conspect_id}}">
+        <div class="col-md-6 offset-md-3" style="width: 800px; background-color: rgb(255, 255, 255);" id="conspect" name="{{conspect_id}}">
             <div>
             {{ conspect_content|safe }}
             </div>
@@ -60,24 +46,13 @@
     </div>
     {% if user.is_authenticated %}
        
-  <!--     <div class="col-md-6 offset-md-3">
-            <fieldset class="rating" >
-                <input type="radio" id="star5" name="rating" value="5" /><label  for="star5" title="Rocks!">5 stars</label>
-                <input type="radio" id="star4" name="rating" value="4" /><label   for="star4" title="Pretty good">4 stars</label>
-                <input type="radio" id="star3" name="rating" value="3" /><label   for="star3" title="Meh">3 stars</label>
-                <input type="radio" id="star2" name="rating" value="2" /><label   for="star2" title="Kinda bad">2 stars</label>
-                <input type="radio" id="star1" name="rating" value="1" /><label   for="star1" title="Sucks big time">1 star</label>
-                <button onclick="get_rating()">Оценить</button>
-            </fieldset>
-        </div>
--->
-        <div class="col-md-6 offset-md-3">
+        <div class="col-md-6 offset-md-3" style="background-color: rgb(255, 255, 255);">
             <form method="POST">
                 {% csrf_token %}
                 {{ comment_form.as_p }}
-                <button  class = "" type="submit">Отправить</button>
+                <button  class = "" type="submit">{% trans "Отправить" %}</button>
             </form>
-            КОМЕНТАРИИ
+            {% trans "Комментарии" %}
         </div>
 
             <div class="col-md-6 offset-md-3" id="comment_field" name="{{conspect_id}}">
@@ -87,7 +62,7 @@
 <div  class="p-3 mb-2 bg-dark text-white">
        <div class="col-md-6 offset-md-3">
 
-       Чтобы оставить комментарий или оценить конспект <a href="{% url 'login' %}">войдите на сайт</a>
+       {% trans "Чтобы оставить комментарий или оценить конспект " %}<a href="{% url 'login' %}">{% trans "войдите на сайт" %}</a>
 </div>
 </div>
     {% endif %}
@@ -99,7 +74,7 @@
 
 
 <script>
-  function checker(){
+function checker(){
       $.ajax({
         type: "GET",
         url:  "{% url 'check_comment' %}",
@@ -109,12 +84,13 @@
         dataType: "text",
         success: function(html){  
                       $("#comment_field").html(html);  
-                  }  
-      })
+                  }
+        })
   }
-  $(document).ready(function(){  
-              checker();
-              setInterval('checker()',5000);
-          }); 
+$(document).ready(function(){
+    checker();
+    setInterval('checker()',5000);
+ }); 
+
 </script>
 {% endblock %}

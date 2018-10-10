@@ -13,6 +13,7 @@ class Conspect(models.Model):
     vote_counter = models.PositiveIntegerField(default=0)
     created = models.DateTimeField(auto_now_add=True)
     tags = models.ManyToManyField(Tag, blank=True, related_name='conspects')
+    voted_user = models.ManyToManyField(User, blank=True, related_name='ratngs_conspects')
 
     def __str__(self):
         return self.name

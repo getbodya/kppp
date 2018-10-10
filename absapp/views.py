@@ -6,8 +6,10 @@ from conspectapp.models import Conspect
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
 from tagapp.views import str_all_tag
+from uiapp.models import Ui
 
 def main(request):
+    ui = Ui.objects.get(user_id=request.user.id).ui_title
     tag_string = str_all_tag()
     toplist = Conspect.objects.order_by('-rating')[0:10]
     newlist = Conspect.objects.order_by('-created')[0:10]
@@ -15,6 +17,7 @@ def main(request):
         'tag_string':tag_string,
         'toplist': toplist,
         'newlist': newlist,
+        'ui': ui,
     })
 
 
@@ -23,7 +26,10 @@ def err(request):
 
 
 def index(request):
-    return render(request, 'absapp/index.html',{})
+    ui = Ui.objects.get(user_id=request.user.id).ui_title
+    return render(request, 'absapp/index.html',{
+        'ui': ui,
+        })
 
 
 @login_required(login_url = 'login')
@@ -62,10 +68,6 @@ def logout_user(request):
 def user_edit(request):
     if request.method == 'GET':
         field = request.GET['field']
-        print("===================")
-        print(request.user)
-        print(type(field))
-        print("===================")
         return HttpResponse('<form method="GET"><input type="text" id="edit_'+field+'"><button type="submit" onclick="replace(\''+field+'\')">submit</button></form>')
 
 

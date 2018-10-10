@@ -1,5 +1,6 @@
 {% extends 'absapp/index.html'%}
 {% load static %}
+{% load i18n %}
 
 {% block head_extra %}
 <script src="{% static 'conspectapp/getter.js' %}"></script>
@@ -11,10 +12,10 @@
 {% endblock %}
 
 
-{% block title %}КУРСОВОЙ{% endblock %}
+{% block title %}{% trans "Курсовой" %}{% endblock %}
 
 {%block content%}
-    <a href="../">Вернуться к конспекту</a>
+    <a href="../">{% trans "Вернуться к конспекту" %}</a>
         <div id="redaktor" class='d-flex flex-column'>
                     <div class="d-flex justify-content-center mt-4">
                     <textarea name="" id="conspect_name" cols="80" rows="1">{{conspect_name}}</textarea>
@@ -32,7 +33,7 @@
 
                     </div>
                     <div class="d-flex justify-content-center mt-1">        
-                    <button type="button"  class="btn btn-secondary btn-lg btn-block" onclick="geter()">Сохранить изменения</button>
+                    <button type="button"  class="btn btn-secondary btn-lg btn-block" onclick="geter()">{% trans "Сохранить изменения" %}</button>
                     </div>
                     <div id="idd"></div>
         </div>

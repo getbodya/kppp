@@ -35,8 +35,8 @@ def conspect_del(request,conspect_id):
 
 
 def conspect_edit(request, conspect_id):
-    conspect_name = Conspect.objects.filter(id=conspect_id).values('name')[0]['name']
-    conspect_content = Conspect.objects.filter(id=conspect_id).values('content')[0]['content']
+    conspect_name = Conspect.objects.get(id=conspect_id).name
+    conspect_content = Conspect.objects.get(id=conspect_id).content
     return render(request, 'conspectapp/conspect_edit.html',{
         'conspect_name' : conspect_name,
         'conspect_content' : conspect_content,
@@ -54,10 +54,17 @@ def get_edit_conspect(request):
 
 def conspect(request,conspect_id):
     conspect = Conspect.objects.filter(id=conspect_id).get()
-    conspect_content = Conspect.objects.filter(id=conspect_id).values('content')[0]['content']
+    conspect_content = Conspect.objects.get(id=conspect_id).content
     coment_list = Coment.objects.filter(conspect_id=conspect_id).order_by('-created')
     comment_form = ComentForm(request.POST)
     conspect_content2 = markdown2.markdown(conspect_content)
+    context = {
+        'conspect_id': conspect_id,
+        'coment_list': coment_list,
+        'comment_form': comment_form,
+        'conspect': conspect,
+        'conspect_content': conspect_content2,
+        }
     if request.method =='POST':
         if comment_form.is_valid:
             s=comment_form.save(commit=False)
@@ -65,17 +72,5 @@ def conspect(request,conspect_id):
             s.conspect = conspect
             s.save()
 
-            return render(request, 'conspectapp/conspect.html', {
-                'conspect_id': conspect_id,
-                'coment_list': coment_list,
-                'comment_form': comment_form,
-                'conspect': conspect,
-                'conspect_content': conspect_content2,
-            })
-    return render(request, 'conspectapp/conspect.html',{
-        'conspect_id': conspect_id,
-        'coment_list': coment_list,
-        'comment_form': comment_form,
-        'conspect': conspect,
-        'conspect_content': conspect_content2,
-    })
+            return render(request, 'conspectapp/conspect.html', context)
+    return render(request, 'conspectapp/conspect.html',context)

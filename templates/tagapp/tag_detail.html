@@ -1,11 +1,12 @@
 {% extends 'absapp/index.html'%}
 {% load static %}
+{% load i18n %}
 
 {% block head_extra %}
 {% endblock %}
 
 
-{% block title %}КУРСОВОЙ{% endblock %}
+{% block title %}{% trans "Курсовой" %}{% endblock %}
 
 {%block content%}
 
@@ -18,7 +19,7 @@
         </div>
         <div class="card-body">
             <p class="card-text">{{conspect.description}}{{conspect.id}}</p>
-            <a href="{% url 'conspect' conspect.id %}" class="btn btn-secondary">Подробнее</a>
+            <a href="{% url 'conspect' conspect.id %}" class="btn btn-secondary">{% trans "Подробнее" %}</a>
         </div>
     </div>
     {% endfor %}

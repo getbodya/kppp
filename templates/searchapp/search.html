@@ -1,7 +1,8 @@
 {% extends 'absapp/index.html'%}
 {% load static %}
+{% load i18n %}
 
-{% block title %}КУРСОВОЙ{% endblock %}
+{% block title %}{% trans "Курсовой" %}{% endblock %}
 
 {% block head_extra %}
 {% endblock %}
@@ -12,7 +13,7 @@
 <div class="conteiner">
     <div class="row">
         <div class="col-md-6 offset-md-3">
-            <h3>Результат поиска :</h3>
+            <h3>{% trans "Результат поиска" %} :</h3>
             {% for item in founded %}
             <div class="alert alert-secondary">
                 <a href="{% url 'conspect' item.id %}"><h3>{{item.name}}</h3></a>
