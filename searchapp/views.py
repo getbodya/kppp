@@ -10,7 +10,6 @@ def search(request):
     founded = Conspect.objects.filter(
         Q(name__contains = query)|
         Q(content__contains = query))
-
     founded_comment = Coment.objects.filter(
         Q(content__contains=query))
 

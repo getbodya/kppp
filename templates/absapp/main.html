@@ -3,14 +3,11 @@
 {% load i18n %}
 {% block head_extra %}
 
-  <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
-  <script>
-    zingchart.MODULESDIR = "https://cdn.zingchart.com/modules/";
-    ZC.LICENSE = ["569d52cefae586f634c54f86dc99e6a9", "ee6b7db5b51705a13dc2339db3edaf6d"];
-  </script>
-  <link href="https://fonts.googleapis.com/css?family=Crete+Round" rel="stylesheet">
-
     <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'tagapp/jqcloud.css' %}" />
+    <script type="text/javascript" src="{% static 'tagapp/jqcloud-1.0.0.js' %}"></script>
+    
+<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
 
     {% endblock %}
 
@@ -23,16 +20,19 @@
 
     <div class='d-flex'>
 
-<div class="p-2 mr-2" style="width:25%;" id="myChart">
-</div>
-
-
+<script type="text/javascript">
+      var word_list = [
+        {% for key, value in tag_dict.items %}
+        {text: "{{ key }}", weight:{{ value.0}}, link: "tag/{{value.1}}/"},
+        {% endfor %}
+        ];
+      $(function() {
+        $("#my_favorite_latin_words").jQCloud(word_list);
+      });
+    </script>
+<div class="mr-5" id="my_favorite_latin_words" style="width: 25%; height: 300px; "></div>
 
 <div style="width:65%">
-
-
-
-
     <ul class="nav nav-tabs " id="myTab" role="tablist">
   <li class="nav-item ">
     <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">{% trans "Лучшие" %}
@@ -98,62 +98,4 @@
 </div>
 </div>
 
-<script>
-    
-    var myConfig = {
-      type: 'wordcloud',
-      options: {
-        text: '{{tag_string}}',
-        minLength: 5,
-        ignore: [],
-        maxItems: 40,
-        aspect: 'flow-center',
-        rotate: true,
-        colorType: 'palette',
-        palette: ['#D32F2F', '#5D4037', '#1976D2', '#E53935', '#6D4C41', '#1E88E5', '#F44336', '#795548', '#2196F3', '#EF5350', '#8D6E63', '#42A5F5'],
-
-        style: {
-          fontFamily: 'Crete Round',
-
-          hoverState: {
-            backgroundColor: '#D32F2F',
-            borderRadius: 2,
-            fontColor: 'white'
-          },
-          tooltip: {
-            text: '%text: %hits',
-            visible: true,
-
-            alpha: 0.9,
-            backgroundColor: '#1976D2',
-            borderRadius: 2,
-            borderColor: 'none',
-            fontColor: 'white',
-            fontFamily: 'Georgia',
-            textAlpha: 1
-          }
-        }
-      },
-
-      source: {
-        text: '',
-        //Source: https://obamawhitehouse.archives.gov/the-press-office/2015/03/07/remarks-president-50th-anniversary-selma-montgomery-marches
-        fontColor: '#64B5F6',
-        fontSize: 14,
-        fontFamily: 'Georgia',
-        fontWeight: 'normal',
-        marginBottom: '10%'
-      }
-    };
-
-    zingchart.render({
-      id: 'myChart',
-      data: myConfig,
-      height: 300,
-      width: '100%'
-    });
-
-
-
-</script>
 {% endblock %}

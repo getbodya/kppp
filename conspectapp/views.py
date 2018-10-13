@@ -4,24 +4,35 @@ from django.urls import reverse
 from commentapp.forms import ComentForm
 from commentapp.models import Coment
 from conspectapp.models import Conspect
+from tagapp.models import Tag
 from conspectapp.forms import ConspectForm
 from django.contrib.auth.decorators import login_required
 import markdown2
 
 
 # Create your views here.
+def new_create_conspect(request):
+    return render(request,'conspectapp/new_create_conspect.html',{})
+
+
+
 @login_required(login_url = 'error')
 def create_conspect(request):
     conspect_form = ConspectForm(request.POST)
     if request.method =='POST':
         if conspect_form.is_valid:
             conspect_form.save()
+            conspect_tags = Conspect.objects.order_by('-created')[0].tags.all()
+            for tag in conspect_tags:
+                s = Tag.objects.get(name=tag)
+                s.count += 1
+                s.save()
             #s = conspect_form.save(commit=False)
             #s.author = request.user
             #s.save()
     return render(request, 'conspectapp/create_conspect.html',{
         'form':conspect_form,
-    } )
+    })
 
 
 def conspect_del(request,conspect_id):

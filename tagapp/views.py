@@ -12,14 +12,20 @@ def tag_detail(request, tag_id):
         'tag_name': tag_name,
     })
 
+def tag_dict():
+    	tag_dct = {}
+    	for tag in Tag.objects.all():
+    		tag_dct[tag.name] = (tag.count, tag.id)
+    	return tag_dct
+
 def str_all_tag():
 	string_tag = ''
 	conspects = Conspect.objects.all()
 	for conspect in conspects:
 		tags = conspect.tags.all()
 		for tag in tags:
+			count_tag = Tag.objects.get(name=tag.name).count
+			count_tag += 1
 			string_tag += tag.name
 			string_tag += ' '
 	return string_tag
-
-

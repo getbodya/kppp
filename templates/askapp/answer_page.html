@@ -12,27 +12,35 @@
 
 {%block content%}
 
-    <div class="col" >
-        <div id="ask-field" class="col-md-6 offset-md-3">{{conspect_author}}
-                <textarea id="text-input" style="width: 100%"  resp="{{conspect_author_id}}" id="" cols="75" rows="4"></textarea>
-                <button style="width: 100%" onclick="sends()">Отправить</button>
+
+        <div id="ask-field" class="col-md-6 offset-md-3">
+            <div>
+                От: {{who_ask}}
+            </div>
+            <div>
+               <h4>{{ask}}</h4>
+            </div>
+            <textarea id="text-input" style="width: 100%"  resp="{{ask_id}}" id="" cols="75" rows="4"></textarea>
+            <button style="width: 100%" onclick="sends()">Отправить</button>
         </div>
-        <div id="qwer"></div>
-    </div>
+
 
 <script>
 var dt = 0
     function sends(){
     var message = $('textarea').val();
-    var conspect_author_id = $('textarea').attr('resp');
+    var ask_id = $('textarea').attr('resp');
     var dt 
-    console.log(conspect_author_id)
+    console.log(message)
+        console.log(dt)
+
+    console.log(ask_id)
     $.ajax({
         type: "GET",
-        url: "{% url 'q_and_a' %}",
+        url: "{% url 'response' %}",
         data:{
             'message': message,
-            'conspect_author_id': conspect_author_id,
+            'ask_id': ask_id,
         },
         dataType: "text",
         success: function(data){

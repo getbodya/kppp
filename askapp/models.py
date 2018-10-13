@@ -5,17 +5,10 @@ from django.dispatch import receiver
 # Create your models here.
 
 class Ask(models.Model):
-    who_ask = models.OneToOneField(User, on_delete=models.CASCADE)
-    who_is_response = models.OneToOneField(User, on_delete=models.CASCADE, related_name='responses')
+    who_ask = models.ForeignKey(User, on_delete=models.CASCADE)
+    who_is_response = models.ForeignKey(User, on_delete=models.CASCADE, related_name='responses')
     chat_text = models.TextField()
+    created = models.DateTimeField(auto_now_add=True)
+
     def __str__(self):
         return self.who_ask +'>>>'+self.who_is_response
-
-@receiver(post_save, sender=User)
-def create_ask(sender, instance, created, **kwargs):
-    if created:
-        Ask.objects.create(user=instance)
-
-@receiver(post_save, sender=User)
-def save_ask(sender, instance, **kwargs):
-    instance.ui.save()

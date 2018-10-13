@@ -5,17 +5,22 @@ from absapp.forms import  UserForm
 from conspectapp.models import Conspect
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
-from tagapp.views import str_all_tag
+from tagapp.views import str_all_tag, tag_dict
 from uiapp.models import Ui
+from askapp.models import Ask
+
 
 def main(request):
     tag_string = str_all_tag()
+    tag_dt = tag_dict()
+    
     toplist = Conspect.objects.order_by('-rating')[0:10]
     newlist = Conspect.objects.order_by('-created')[0:10]
     return render(request, 'absapp/main.html',{
         'tag_string':tag_string,
         'toplist': toplist,
         'newlist': newlist,
+        'tag_dict':tag_dt,
     })
 
 def public_user(request):
@@ -32,6 +37,7 @@ def index(request):
 @login_required(login_url = 'login')
 def user_page(request, user_id):
     user_conspect_list = Conspect.objects.filter(author_id=user_id).all()
+    user_answer_list = Ask.objects.filter(who_is_response=user_id)
     return render(request, 'absapp/userpage.html',{
         'user_conspect_list' : user_conspect_list,
     })
