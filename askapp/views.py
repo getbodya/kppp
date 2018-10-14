@@ -14,13 +14,14 @@ def ask_page(request, conspect_id):
 
 def answer_page(request,ask_id):
 	ask = Ask.objects.get(id=ask_id)
+	Ask.objects.filter(id=ask_id).update(read=True)	
 	return render(request,'askapp/answer_page.html',{
 		'ask': ask.chat_text,
 		'who_ask': ask.who_ask,
 		'ask_id': ask_id,
 		})
 
-def q_and_a(request):
+def question(request):
     if request.method == "GET":
     	message = request.GET['message']
     	conspect_author_id = int(request.GET['conspect_author_id'])
@@ -35,6 +36,7 @@ def response(request):
 		responser = Ask.objects.get(id=ask_id).who_ask	
 		print(message + "_____" + ask_id)
 		Ask(who_ask=request.user, who_is_response=responser, chat_text=message).save()
+		Ask.objects.filter(id=ask_id).update(answered=True)
 		return HttpResponse("ответ отправлен")
 
 def check_new_message(request):

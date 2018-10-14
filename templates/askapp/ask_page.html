@@ -15,7 +15,7 @@
     <div class="col" >
         <div id="ask-field" class="col-md-6 offset-md-3">{{conspect_author}}
                 <textarea id="text-input" style="width: 100%"  resp="{{conspect_author_id}}" id="" cols="75" rows="4"></textarea>
-                <button style="width: 100%" onclick="sends()">Отправить</button>
+                <button class="btn btn-dark" style="width:100%;" onclick="sends()">Отправить</button>
         </div>
         <div id="qwer"></div>
     </div>
@@ -29,7 +29,7 @@ var dt = 0
     console.log(conspect_author_id)
     $.ajax({
         type: "GET",
-        url: "{% url 'q_and_a' %}",
+        url: "{% url 'question' %}",
         data:{
             'message': message,
             'conspect_author_id': conspect_author_id,

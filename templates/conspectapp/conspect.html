@@ -3,7 +3,7 @@
 {% load i18n %}
 {% block title %}{{ conspect.name }}{% endblock %}
 {% block head_extra %}
-<link rel="stylesheet" type="text/css" href="{% static '5star.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'conspectapp/5star.css' %}">
 <script src="{% static 'conspectapp/5star.js' %}"></script>
 <script src="{% static 'conspectapp/save2doc.js' %}"></script>
 
@@ -52,7 +52,16 @@
             </div>
         </div>
     </div>
+
     {% if user.is_authenticated %}
+    <div class="col-md-6 offset-md-3" id="rat-fil">
+<span class="star-rating">
+  <input type="radio" onclick="get_rating(1)" name="rating" value="1"><i></i>
+  <input type="radio" onclick="get_rating(2)" name="rating" value="2"><i></i>
+  <input type="radio" onclick="get_rating(3)" name="rating" value="3"><i></i>
+  <input type="radio" onclick="get_rating(4)" name="rating" value="4"><i></i>
+  <input type="radio" onclick="get_rating(5)" name="rating" value="5"><i></i>
+</span></div>
         <div class="col-md-6 offset-md-3" style="background-color: rgb(255, 255, 255);">
             <form method="POST">
                 {% csrf_token %}

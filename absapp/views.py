@@ -5,26 +5,21 @@ from absapp.forms import  UserForm
 from conspectapp.models import Conspect
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
-from tagapp.views import str_all_tag, tag_dict
+from tagapp.views import tag_dict
 from uiapp.models import Ui
 from askapp.models import Ask
 
 
 def main(request):
-    tag_string = str_all_tag()
     tag_dt = tag_dict()
-    
     toplist = Conspect.objects.order_by('-rating')[0:10]
     newlist = Conspect.objects.order_by('-created')[0:10]
     return render(request, 'absapp/main.html',{
-        'tag_string':tag_string,
         'toplist': toplist,
         'newlist': newlist,
         'tag_dict':tag_dt,
     })
 
-def public_user(request):
-    pass
 
 def err(request):
     return render(request, 'absapp/err.html',{})
@@ -37,9 +32,10 @@ def index(request):
 @login_required(login_url = 'login')
 def user_page(request, user_id):
     user_conspect_list = Conspect.objects.filter(author_id=user_id).all()
-    user_answer_list = Ask.objects.filter(who_is_response=user_id)
+    user_answer_list = Ask.objects.filter(who_is_response=user_id).order_by('-created')
     return render(request, 'absapp/userpage.html',{
         'user_conspect_list' : user_conspect_list,
+        'user_answer_list': user_answer_list,
     })
 
 
@@ -75,19 +71,10 @@ def user_edit(request):
 
 def user_save_change(request):
     if request.method == 'GET':
-        new_login = request.GET['new_login'],
-        new_first_name = request.GET['new_first_name'],
-        new_last_name = request.GET['new_last_name'],
-        new_email = request.GET['new_email'],
-        print(new_login[0])
-        print(new_first_name[0])
-        print(new_last_name[0])
-        print(new_email[0])
-        #User.objects.filter(username=request.user).values('sum_all_vote').update(sum_all_vote=sum_all_vote)
-        Uzer = User.objects.get(username=request.user)
-        Uzer.username = new_login[0]
-        Uzer.first_name = new_first_name[0]
-        Uzer.last_name = new_last_name[0]
-        Uzer.email=new_email[0]
-        Uzer.save()
+        user = User.objects.get(username=request.user)
+        user.username = request.GET['new_login']
+        user.first_name = request.GET['new_first_name']
+        user.last_name = request.GET['new_last_name']
+        user.email = request.GET['new_email']
+        user.save()
         return HttpResponse('Изменено')

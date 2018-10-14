@@ -25,18 +25,13 @@
             <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
                 <div id="editf">
               
-                <!--<form action="GET">-->
-
                     <div>{% trans "Информация о пользователе" %}</div>
                     <div>{% trans "Логин" %}:&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <input type="text"  id="username" value="{{user.username}}"> </div>
                     <div>{% trans "Имя" %}:&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <input type="text"  id="first_name" value=" {{user.first_name}}"> </div>
                     <div>{% trans "Фамилия" %}:&#160;&#160; <input type="text"  id="last_name" value="{{user.last_name}}"></div>
                     <div>Email: &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <input type="text" " id="email" value="{{user.email}}"></div>
                     <input type="submit" value="Изменить" onclick="save_change()" ><div id="save_change_response"></div>
- <!--
-                </form>
--->
-
+ 
                 </div>
                
                 </div>
@@ -48,7 +43,7 @@
                         <h4>{% trans "Мои конспекты" %}</h4>
                         </div>
                         <div>
-                        <a class="btn btn-outline-secondary" href="{% url 'create_conspect' %}">{% trans "Создать конспект" %}</a>
+                        <a class="btn btn-outline-secondary" href="{% url 'new_create_conspect' %}">{% trans "Создать конспект" %}</a>
                         </div>
                     </div>
                         
@@ -64,8 +59,41 @@
                 </div>
             </div>
             <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
-                ...
-            </div>
+                
+
+
+
+
+
+{% for i  in  user_answer_list %}
+    {% if not i.read or not i.answered %}
+
+        <div>
+            <a  style="width:100%;" href='/answer_page/{{i.id}}/' class="mb-1 btn btn-{% if not i.read %}dark{% elif not i.answered %}secondary{% endif %}">
+                
+                    <div  class="d-flex justify-content-between">
+                        <div class="mr-5">{{i.who_ask}}</div>
+                        <div>{{i.chat_text}}</div>
+                    </div>
+            </a>
+        </div>
+    {% else %}
+        <h3>{% trans "Нет новых вопросов" %}</h3>
+    {% endif %}
+{% endfor %}
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
             <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
 
                 <a href="#" name='{{user.ui.ui_title}}' id="change_style" class="btn btn-secondary btn-lg btn-block" onclick="change_style()">{% trans "Поменять стиль" %}</a>

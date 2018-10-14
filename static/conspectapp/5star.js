@@ -1,5 +1,5 @@
-function get_rating(){
-  var value =  $("input[type=radio]:checked").attr("value")
+function get_rating(vote){
+  var value =  vote
   var conspect_id = $('#conspect').attr('name')
   console.log(value)  
   console.log(conspect_id)  
@@ -13,7 +13,12 @@ function get_rating(){
     },
     dataType: "text",
     success: function(html){  
-                  $('.rating').html(html);  
+                  $('#rat-fil').html(html);  
               }  
   })
 }
+$(':radio').change(
+  function(){
+    $('.choice').text( this.value + ' stars' );
+  } 
+)

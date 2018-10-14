@@ -11,6 +11,7 @@ import markdown2
 
 
 # Create your views here.
+@login_required(login_url = 'error')
 def new_create_conspect(request):
     return render(request,'conspectapp/new_create_conspect.html',{})
     

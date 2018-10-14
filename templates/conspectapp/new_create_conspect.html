@@ -3,47 +3,8 @@
 {% load static %}
 {% block title %}{{ user.username }}{% endblock %}
 
-{% block head_extra %}   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <link rel="stylesheet" href="/resources/demos/style.css">
-  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  <script>
-  $( function() {
-    var availableTags = [
-      "ActionScript",
-      "AppleScript",
-      "Asp",
-      "BASIC",
-      "C",
-      "C++",
-      "Clojure",
-      "COBOL",
-      "ColdFusion",
-      "Erlang",
-      "Fortran",
-      "Groovy",
-      "Haskell",
-      "Java",
-      "JavaScript",
-      "Lisp",
-      "Perl",
-      "PHP",
-      "Python",
-      "Ruby",
-      "Scala",
-      "Scheme"
-    ];
-    $( "#tags" ).autocomplete({
-      source: availableTags
-    });
-  } );
-  </script>
+{% block head_extra %} 
 <script src="{% static 'conspectapp/maker.js' %}"></script>
-<!--<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>-->
-<script
-  src="https://code.jquery.com/jquery-3.3.1.min.js"
-  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-  crossorigin="anonymous"></script>
 {% endblock %}
 
 {% block content%}
@@ -53,24 +14,26 @@
 <div id='mkconspect' class="col-md-6 offset-md-3">
   
   <div>Название </div>
-  <input  style="width:600px;" id="name" type="text">
+  <input  style="width:100%;" id="name" type="text">
 
 <div>Короткое описание </div>
-<textarea id="description" id="conspect_name" cols="80" rows="4">{{conspect_name}}</textarea>
+<textarea id="description" id="conspect_name" style="width:100%;" rows="4">{{conspect_name}}</textarea>
 
 <div>Специальность </div>
-<input  style="width:600px;" id="specialty" type="text">
+<input  style="width:100%;" id="specialty" type="text">
 
 
 <div> Текст  </div>
 <form id="drop_area" class="area" method="GET" enctype="multipart/form-data">
-<textarea name="{{conspect_id}}" id="conspect" cols="80" rows="18"></textarea>
+<textarea name="{{conspect_id}}" id="conspect" style="width:100%;" rows="18"></textarea>
 </form>
 <div  class="ui-widget">
 <div>Теги </div>
-<input  style="width:600px;" id="tags" type="text">
+<input  style="width:100%;" id="tags" type="text">
 </div >
-<button onclick="maker()">ssss</button>
+ 
+
+<button onclick="maker()" class="btn btn-dark" style="width:100%;" >Сохранить</button>
 
 </div>
                     

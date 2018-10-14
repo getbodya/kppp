@@ -61,12 +61,21 @@ cloudinary.config(
 
 AUTHENTICATION_BACKENDS = (
     'social_core.backends.vk.VKOAuth2',          # бекенд авторизации через ВКонтакте
-    'django.contrib.auth.backends.ModelBackend',)
+    'django.contrib.auth.backends.ModelBackend',
+    'social_core.backends.github.GithubOAuth2',
+    'social_core.backends.twitter.TwitterOAuth',
+    'social_core.backends.facebook.FacebookOAuth2',
+    )
 
 SOCIAL_AUTH_VK_OAUTH2_KEY = '6707933'
 SOCIAL_AUTH_VK_OAUTH2_SECRET = 'JTd30JbbnDMZ2vmjU2OJ'
 SOCIAL_AUTH_VK_OAUTH2_SCOPE = ['email']
 
+SOCIAL_AUTH_FACEBOOK_KEY = '690498571335194'  # App ID
+SOCIAL_AUTH_FACEBOOK_SECRET = 'e5bfc0fb51180b05b4503826ef4e13ca'  # App Secret
+
+SOCIAL_AUTH_GITHUB_KEY = '79928713275d55b08253'
+SOCIAL_AUTH_GITHUB_SECRET = '36436d012894d1915ea7096e7f4a369b35092d19'
 
 
 
@@ -79,6 +88,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
 
 ROOT_URLCONF = 'kp.urls'
@@ -94,8 +104,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'social_django.context_processors.backends',  # Добавил эту строку
-
+                'social_django.context_processors.backends',  # Добавил эту строку  
             ],
         },
     },
