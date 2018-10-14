@@ -13,8 +13,34 @@ import markdown2
 # Create your views here.
 def new_create_conspect(request):
     return render(request,'conspectapp/new_create_conspect.html',{})
-
-
+    
+@login_required(login_url = 'error')
+def make_conspect(request):
+    if request.method == "GET":
+        Conspect(author=request.user,
+            name=request.GET['name'],
+            description=request.GET['description'],
+            specialty=request.GET['specialty'],
+            content=request.GET['content']
+            ).save()
+        tags = request.GET['tags']
+        tag_list = tags.split(", ")
+        all_tags = Tag.objects.all()
+        all_tags_list = []
+        for tag in Tag.objects.values('name'):
+            all_tags_list.append(tag['name'])
+        print(all_tags_list)
+        for new_tag in tag_list:
+            if new_tag not in all_tags_list:
+                s = Tag(name=new_tag, count=1)
+                s.save()
+            elif new_tag in all_tags_list:
+                s = Tag.objects.get(name=new_tag)
+                s.count += 1
+                s.save()
+            conspect = Conspect.objects.filter(author=request.user).order_by('-created')[0]
+            conspect.tags.add(s)
+    return HttpResponse('fuuf')
 
 @login_required(login_url = 'error')
 def create_conspect(request):

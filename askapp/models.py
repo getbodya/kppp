@@ -9,6 +9,3 @@ class Ask(models.Model):
     who_is_response = models.ForeignKey(User, on_delete=models.CASCADE, related_name='responses')
     chat_text = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return self.who_ask +'>>>'+self.who_is_response

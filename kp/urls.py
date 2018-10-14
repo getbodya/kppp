@@ -26,6 +26,8 @@ urlpatterns =[
     path('userpage/save_edit/', views.user_save_change, name='user_save_change'),
     path('userpage/create_conspect/', conspect_views.create_conspect,name='create_conspect'),
     path('user_reaction/',like_views.user_reaction, name='user_reaction'),
+    path('userpage/new_create_conspect/', conspect_views.new_create_conspect,name='new_create_conspect'),
+    path('userpage/make_conspect/',conspect_views.make_conspect,name='make_conspect'),
 
     path('conspect/<int:conspect_id>/', conspect_views.conspect, name='conspect'),
     path('conspect/<int:conspect_id>/edit/', conspect_views.conspect_edit, name='conspect_edit'),

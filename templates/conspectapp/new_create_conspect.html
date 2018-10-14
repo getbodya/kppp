@@ -1,0 +1,169 @@
+{% extends "absapp/index.html" %}
+{% load i18n %}
+{% load static %}
+{% block title %}{{ user.username }}{% endblock %}
+
+{% block head_extra %}   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script>
+  $( function() {
+    var availableTags = [
+      "ActionScript",
+      "AppleScript",
+      "Asp",
+      "BASIC",
+      "C",
+      "C++",
+      "Clojure",
+      "COBOL",
+      "ColdFusion",
+      "Erlang",
+      "Fortran",
+      "Groovy",
+      "Haskell",
+      "Java",
+      "JavaScript",
+      "Lisp",
+      "Perl",
+      "PHP",
+      "Python",
+      "Ruby",
+      "Scala",
+      "Scheme"
+    ];
+    $( "#tags" ).autocomplete({
+      source: availableTags
+    });
+  } );
+  </script>
+<script src="{% static 'conspectapp/maker.js' %}"></script>
+<!--<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>-->
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+{% endblock %}
+
+{% block content%}
+
+
+		<a href="{% url 'userpage' user.id %}">{% trans "Вернуться назад" %}</a>
+<div id='mkconspect' class="col-md-6 offset-md-3">
+  
+  <div>Название </div>
+  <input  style="width:600px;" id="name" type="text">
+
+<div>Короткое описание </div>
+<textarea id="description" id="conspect_name" cols="80" rows="4">{{conspect_name}}</textarea>
+
+<div>Специальность </div>
+<input  style="width:600px;" id="specialty" type="text">
+
+
+<div> Текст  </div>
+<form id="drop_area" class="area" method="GET" enctype="multipart/form-data">
+<textarea name="{{conspect_id}}" id="conspect" cols="80" rows="18"></textarea>
+</form>
+<div  class="ui-widget">
+<div>Теги </div>
+<input  style="width:600px;" id="tags" type="text">
+</div >
+<button onclick="maker()">ssss</button>
+
+</div>
+                    
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+
+<script>
+var drop_area = document.getElementById("drop_area");
+function dragHandler(event) {
+    event.stopPropagation();
+    event.preventDefault();
+
+    var drop_area = document.getElementById("drop_area");
+    drop_area.className = "area drag";
+}
+
+function insertTextAtCursor(el, text, offset) {
+    var val = el.value, endIndex, range, doc = el.ownerDocument;
+    if (typeof el.selectionStart == "number"
+            && typeof el.selectionEnd == "number") {
+        endIndex = el.selectionEnd;
+        el.value = val.slice(0, endIndex) + text + val.slice(endIndex);
+        el.selectionStart = el.selectionEnd = endIndex + text.length+(offset?offset:0);
+    } else if (doc.selection != "undefined" && doc.selection.createRange) {
+        el.focus();
+        range = doc.selection.createRange();
+        range.collapse(false);
+        range.text = text;
+        range.select();
+    }
+}
+
+function filesDroped(event) {
+    event.stopPropagation();
+    event.preventDefault();
+    drop_area.className = "area";
+    let url = "{% url 'add_photo' %}"
+    var files = event.dataTransfer.files; 
+    var img = files[0];
+    console.log(img);
+    var data = new FormData();
+    var name  = Date.now();
+    data.append('img', img);
+    data.append('name', name);
+
+        $.ajax({
+            url : url,
+            processData : false,
+            contentType : false,
+            type : 'POST',
+            data : data,
+            success: function(link){
+                insertTextAtCursor(document.getElementById('conspect'),link);
+            }
+    }).done(function(data) {
+    });
+
+}
+
+        
+    
+
+
+window.onload = function() {
+
+    if (window.File && window.FileList) {
+        var drop_area = document.getElementById("drop_area");
+
+        drop_area.addEventListener("dragover", dragHandler);
+        drop_area.addEventListener("drop", filesDroped);
+
+    }
+    else {
+        console.log("Your browser does not support File API");
+    }
+}
+
+</script>
+{% endblock %}
