@@ -32,10 +32,23 @@ def index(request):
 @login_required(login_url = 'login')
 def user_page(request, user_id):
     user_conspect_list = Conspect.objects.filter(author_id=user_id).all()
-    user_answer_list = Ask.objects.filter(who_is_response=user_id).order_by('-created')
+    us = []
+    last_ask = []
+    user_answer_list = list(Ask.objects.filter(who_is_response=user_id).order_by('-created'))
+    for item in user_answer_list:
+        if item.who_ask not in us:
+            us.append(item.who_ask)
+    for item in us:
+        s = Ask.objects.filter(who_ask=item).order_by('-created')[0]
+        last_ask.append(s)
+    
+
+
+    user_ask_list = Ask.objects.filter(who_ask=user_id).order_by('-created')
+
     return render(request, 'absapp/userpage.html',{
+        'last_ask':last_ask,
         'user_conspect_list' : user_conspect_list,
-        'user_answer_list': user_answer_list,
     })
 
 

@@ -3,6 +3,7 @@ from askapp.models import Ask
 from django.contrib.auth.models import User
 from django.http import HttpResponse, JsonResponse
 from conspectapp.models import Conspect
+from django.template import loader
 import datetime
 
 
@@ -14,11 +15,16 @@ def ask_page(request, conspect_id):
 
 def answer_page(request,ask_id):
 	ask = Ask.objects.get(id=ask_id)
-	Ask.objects.filter(id=ask_id).update(read=True)	
+	Ask.objects.filter(id=ask_id).update(read=True)
+	ask_story = []
+	for item in Ask.objects.all().order_by('-created'):
+		if item.who_ask == request.user and item.who_is_response == ask.who_ask or 	item.who_ask == ask.who_ask and item.who_is_response == request.user:
+			ask_story.append(item)		
 	return render(request,'askapp/answer_page.html',{
 		'ask': ask.chat_text,
 		'who_ask': ask.who_ask,
 		'ask_id': ask_id,
+		'ask_story': ask_story[0:20],
 		})
 
 def question(request):
@@ -26,18 +32,21 @@ def question(request):
     	message = request.GET['message']
     	conspect_author_id = int(request.GET['conspect_author_id'])
     	responser = User.objects.get(id=conspect_author_id)
-    	Ask(who_ask=request.user, who_is_response=responser, chat_text=message).save()
-    	return HttpResponse("Вопрос отправлен")
+    	if responser == request.user:
+    		return HttpResponse("сам у себя хочешь спросить?")
+    	else:
+    		Ask(who_ask=request.user, who_is_response=responser, chat_text=message).save()
+    		return HttpResponse("Вопрос отправлен")
 
 def response(request):
 	if request.method == "GET":
 		message = request.GET['message']
 		ask_id = request.GET['ask_id']
-		responser = Ask.objects.get(id=ask_id).who_ask	
-		print(message + "_____" + ask_id)
+		responser = Ask.objects.get(id=ask_id).who_ask
 		Ask(who_ask=request.user, who_is_response=responser, chat_text=message).save()
 		Ask.objects.filter(id=ask_id).update(answered=True)
-		return HttpResponse("ответ отправлен")
+		template = loader.get_template("askapp/story.html")
+		return HttpResponse(template.render())
 
 def check_new_message(request):
 	if request.method == "GET":

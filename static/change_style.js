@@ -5,7 +5,7 @@ function change_style(){
 
     $.ajax({
         type: "GET",
-        url:  "../../change_style/",
+        url:  "/change_style/",
         data:{
         'ui_style': uis,
         },

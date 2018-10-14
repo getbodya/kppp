@@ -43,8 +43,11 @@
             {% endfor %}
         </div>
         <div class="col-md-6 offset-md-3" style="width: 800px; background-color: rgb(255, 255, 255);" id="conspect" name="{{conspect_id}}">
-            {% trans "Автор:" %}{{conspect.author.last_name}} {{conspect.author.first_name}}
+            {% trans "Автор:" %}{{conspect.author.username}}
+                {% if user.is_authenticated and user.username != conspect.author.username%}
             <a href="{% url 'ask_page' conspect.id %}">{% trans "Задать вопрос" %}</a> 
+                            {% endif %}
+
             <div id="cons">
             <h2>{{ conspect.name }}</h2>
             <hr>        

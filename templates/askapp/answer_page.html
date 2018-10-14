@@ -15,14 +15,32 @@
 
         <div id="ask-field" class="col-md-6 offset-md-3">
             <div>
-                От: {{who_ask}}
+               {{who_ask}}
             </div>
-            <div>
-               <h4>{{ask}}</h4>
-            </div>
+          
             <textarea id="text-input" style="width: 100%"  resp="{{ask_id}}" id="" cols="75" rows="4"></textarea>
             <button class="btn btn-dark" style="width:100%;" onclick="sends()">Отправить</button>
             <div>
+            <div id="story">
+                
+                {% for item  in  ask_story %}
+                    <div class="mb-2 p-2" {% if item.who_ask == user %}style="background-color: #BFBFBF;"{% else %}style="background-color: #DCDCDC;"{% endif %}>
+                        <div class="mb-1 d-flex justify-content-between flex-row">
+                            <div>
+                                {{item.who_ask}}
+                            </div>
+                            <div>
+                                {{item.created}} 
+                            </div>   
+                        </div>
+
+                        <div>
+                            {{item.chat_text}}
+
+                        </div>
+                    </div>                    
+                {% endfor %}
+            </div>
             </div>
         </div>
 
@@ -45,9 +63,9 @@ var dt = 0
             'ask_id': ask_id,
         },
         dataType: "text",
-        success: function(data){
+        success: function(data){                    location.reload();
 
-            $('#ask-field').html(data );
+
 
                         }
         })

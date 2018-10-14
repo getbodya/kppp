@@ -41,25 +41,7 @@ def make_conspect(request):
                 s.save()
             conspect = Conspect.objects.filter(author=request.user).order_by('-created')[0]
             conspect.tags.add(s)
-    return HttpResponse('fuuf')
-
-@login_required(login_url = 'error')
-def create_conspect(request):
-    conspect_form = ConspectForm(request.POST)
-    if request.method =='POST':
-        if conspect_form.is_valid:
-            conspect_form.save()
-            conspect_tags = Conspect.objects.order_by('-created')[0].tags.all()
-            for tag in conspect_tags:
-                s = Tag.objects.get(name=tag)
-                s.count += 1
-                s.save()
-            #s = conspect_form.save(commit=False)
-            #s.author = request.user
-            #s.save()
-    return render(request, 'conspectapp/create_conspect.html',{
-        'form':conspect_form,
-    })
+    return HttpResponse('Конспект сохранен')
 
 
 def conspect_del(request,conspect_id):

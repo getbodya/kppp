@@ -65,25 +65,12 @@
 
 
 
-{% for i  in  user_answer_list %}
-    {% if not i.read or not i.answered %}
+{% for item in last_ask %}
+<div>
+    <a style="width:100%;" href='/answer_page/{{item.id}}/' class="mb-1 btn btn-secondary">{{item.who_ask}}</a>
+</div>
 
-        <div>
-            <a  style="width:100%;" href='/answer_page/{{i.id}}/' class="mb-1 btn btn-{% if not i.read %}dark{% elif not i.answered %}secondary{% endif %}">
-                
-                    <div  class="d-flex justify-content-between">
-                        <div class="mr-5">{{i.who_ask}}</div>
-                        <div>{{i.chat_text}}</div>
-                    </div>
-            </a>
-        </div>
-    {% else %}
-        <h3>{% trans "Нет новых вопросов" %}</h3>
-    {% endif %}
 {% endfor %}
-
-
-
 
 
 
