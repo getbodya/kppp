@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from tagapp.models import Tag
 from conspectapp.models import Conspect
-
+from django.http import HttpResponse
 
 # Create your views here.
 def tag_detail(request, tag_id):

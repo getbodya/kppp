@@ -45,8 +45,7 @@ def response(request):
 		responser = Ask.objects.get(id=ask_id).who_ask
 		Ask(who_ask=request.user, who_is_response=responser, chat_text=message).save()
 		Ask.objects.filter(id=ask_id).update(answered=True)
-		template = loader.get_template("askapp/story.html")
-		return HttpResponse(template.render())
+		return HttpResponse("1")
 
 def check_new_message(request):
 	if request.method == "GET":

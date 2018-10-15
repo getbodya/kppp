@@ -38,6 +38,7 @@ urlpatterns =[
     path('check_comment/', comment_views.check_comment, name='check_comment'),
     path('get_rating/', rating_views.get_rating, name='get_rating'),
     path('tag/<int:tag_id>/', tag_views.tag_detail, name='tag_detail'),
+    path('tag/get_list',tag_views.tag_detail, name='tag_list'),
     path('change_style/', ui_views.change_style, name='change_style'),
     path('add_photo/',cloud_views.add_photo, name='add_photo'),
     path('search/', search_views.search, name='search'),

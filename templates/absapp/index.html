@@ -5,6 +5,7 @@
 <html lang="en" dir="ltr">
 <head>
     <meta charset="utf-8">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
             integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
             crossorigin="anonymous"></script>
@@ -56,7 +57,7 @@
             </ul>
 
             <form class="form-inline mt-2 mt-md-0" action="{% url 'search' %}" method="GET">
-                <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" name="q">
+                <input id="suggest" class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" name="q">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">{% trans "Поиск" %}</button>
             </form>
             
@@ -64,6 +65,11 @@
     </nav>
 </header>
 <div style="height:80px" >
+
+
+
+
+
 </div>
 <div >
     {% block content%}
@@ -89,6 +95,11 @@ function check_new_message(){
         }
         )
 }
+
+
+
+
+
 
 
 $(document).ready(function(){

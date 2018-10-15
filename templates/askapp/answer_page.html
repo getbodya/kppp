@@ -17,9 +17,10 @@
             <div>
                {{who_ask}}
             </div>
-          
-            <textarea id="text-input" style="width: 100%"  resp="{{ask_id}}" id="" cols="75" rows="4"></textarea>
-            <button class="btn btn-dark" style="width:100%;" onclick="sends()">Отправить</button>
+          <form>
+            <textarea id="text-input" style="width: 100%" placeholder="Сообщение для {{who_ask}}" resp="{{ask_id}}" id="" cols="75" rows="4"></textarea>
+            <button class="btn btn-dark" style="width:100%;" type="reset" onclick="sends()">Отправить</button>
+        </form>
             <div>
             <div id="story">
                 
@@ -50,7 +51,6 @@ var dt = 0
     function sends(){
     var message = $('textarea').val();
     var ask_id = $('textarea').attr('resp');
-    var dt 
     console.log(message)
         console.log(dt)
 
@@ -63,8 +63,8 @@ var dt = 0
             'ask_id': ask_id,
         },
         dataType: "text",
-        success: function(data){                    location.reload();
-
+        success: function(data){ 
+                location.reload();
 
 
                         }

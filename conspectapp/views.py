@@ -48,10 +48,9 @@ def conspect_del(request,conspect_id):
     conspect = Conspect.objects.get(id=conspect_id)
     if request.user.id == conspect.author_id:
         conspect.delete()
-        return redirect('../../../')
+        return redirect('/')
     else:
-        return HttpResponse('<a href="../"><img src="http://img1.joyreactor.cc/pics/comment/poorly-drawn-lines-%D0%9A%D0%BE%D0%BC%D0%B8%D0%BA%D1%81%D1%8B-2487239.jpeg" alt=""></a>')
-
+        return HttpResponse('')
 
 
 def conspect_edit(request, conspect_id):
@@ -61,7 +60,8 @@ def conspect_edit(request, conspect_id):
         'conspect_name' : conspect_name,
         'conspect_content' : conspect_content,
         'conspect_id' :conspect_id,
-    })
+        })
+
 
 def get_edit_conspect(request):
     new_content = request.GET['content']
