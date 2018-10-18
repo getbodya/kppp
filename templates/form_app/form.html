@@ -1,0 +1,20 @@
+{% extends 'absapp/index.html'%}
+{% load static %}
+{% load i18n %}
+
+{% block head_extra %}
+{% endblock %}
+
+
+{% block title %}{% trans "Курсовой" %}{% endblock %}
+
+{%block content%}
+
+    <form method="POST">
+        {%csrf_token%}
+        <input name='name'>
+        <button type="submit">submit</button>
+    </form>
+
+
+{% endblock %}

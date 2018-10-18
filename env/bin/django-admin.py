@@ -1,4 +1,4 @@
-#!/home/b00/9-10/kppp/env/bin/python3
+#!/home/getbo/kppp/env/bin/python3
 from django.core import management
 
 if __name__ == "__main__":

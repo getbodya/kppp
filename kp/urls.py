@@ -11,9 +11,11 @@ from cloudapp import  views as cloud_views
 from searchapp import  views as search_views
 from likeapp import views as like_views
 from askapp import views as ask_views
+from form_app.urls import urlpatterns
 from django.conf.urls.i18n import i18n_patterns
 
 urlpatterns =[
+
     path('admin/', admin.site.urls),
     path('', views.main, name='mainpage'),
     path('err/', views.err, name='error'),
@@ -25,7 +27,6 @@ urlpatterns =[
     path('userpage/save_edit/', views.user_save_change, name='user_save_change'),
     path('user_reaction/',like_views.user_reaction, name='user_reaction'),
     path('userpage/new_create_conspect/', conspect_views.new_create_conspect,name='new_create_conspect'),
-    path('userpage/make_conspect/',conspect_views.make_conspect,name='make_conspect'),
     path('get_edit_conspect/', conspect_views.get_edit_conspect, name='get_edit_conspect'),
     path('conspect/<int:conspect_id>/', conspect_views.conspect, name='conspect'),
     path('conspect/<int:conspect_id>/edit/', conspect_views.conspect_edit, name='conspect_edit'),
@@ -44,4 +45,6 @@ urlpatterns =[
     path('search/', search_views.search, name='search'),
     path('', include('social_django.urls')),
     path('i18n/', include('django.conf.urls.i18n')),
+    path('form/', include('form_app.urls'))
+
 ]

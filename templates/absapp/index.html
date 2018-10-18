@@ -77,8 +77,6 @@
     {% endblock %}
       {% if user.is_authenticated %}
 <script>
-
-
 function check_new_message(){
     $.ajax({
         type: "GET",
@@ -101,10 +99,9 @@ function check_new_message(){
 
 
 
-
 $(document).ready(function(){
     
-    setInterval('check_new_message()',4000);
+  //  setInterval('check_new_message()',4000);
  }); 
  {% endif %}
 </script>

@@ -3,6 +3,7 @@ from django import forms
 
 
 class ConspectForm(forms.ModelForm):
+	
 	class Meta:
 		model = Conspect
-		fields = ('name', 'description', 'author','specialty', 'content', 'tags')
+		fields = ('name', 'author', 'content')

@@ -5,6 +5,7 @@ from commentapp.forms import ComentForm
 from commentapp.models import Coment
 from conspectapp.models import Conspect
 from tagapp.models import Tag
+from tagapp.taging import tagings
 from conspectapp.forms import ConspectForm
 from django.contrib.auth.decorators import login_required
 import markdown2
@@ -13,35 +14,18 @@ import markdown2
 # Create your views here.
 @login_required(login_url = 'error')
 def new_create_conspect(request):
-    return render(request,'conspectapp/new_create_conspect.html',{})
-    
-@login_required(login_url = 'error')
-def make_conspect(request):
-    if request.method == "GET":
-        Conspect(author=request.user,
-            name=request.GET['name'],
-            description=request.GET['description'],
-            specialty=request.GET['specialty'],
-            content=request.GET['content']
-            ).save()
-        tags = request.GET['tags']
-        tag_list = tags.split(", ")
-        all_tags = Tag.objects.all()
-        all_tags_list = []
-        for tag in Tag.objects.values('name'):
-            all_tags_list.append(tag['name'])
-        print(all_tags_list)
-        for new_tag in tag_list:
-            if new_tag not in all_tags_list:
-                s = Tag(name=new_tag, count=1)
-                s.save()
-            elif new_tag in all_tags_list:
-                s = Tag.objects.get(name=new_tag)
-                s.count += 1
-                s.save()
-            conspect = Conspect.objects.filter(author=request.user).order_by('-created')[0]
-            conspect.tags.add(s)
-    return HttpResponse('Конспект сохранен')
+    data = {}
+    if request.method == 'POST':
+        new_conspect = ConspectForm(request.POST)
+        if new_conspect.is_valid():
+            new_conspect.save()
+            data['alert']="Пост создан"
+            tags = request.POST['tags']
+            tagings(tags,request.user.id)
+        else:
+            data['alert']="Пост не создан, проверьте заполнены ли поля"  
+    return render(request,'conspectapp/new_create_conspect.html',data)
+
 
 
 def conspect_del(request,conspect_id):
